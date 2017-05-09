@@ -5,7 +5,8 @@ socket.on('news', function (data) {
 });
 
 socket.on('liveStream', function(url) {
-  $('#stream').attr('src', url);
+  var stream = document.getElementById('stream');
+  stream.attr('src', url);
 });
 
 window.addEventListener("load", function(){

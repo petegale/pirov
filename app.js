@@ -62,7 +62,7 @@ function startStreaming(io,data) {
   console.log('Watching for changes...');
   app.set('watchingFile', true);
   fs.watchFile(config.stream_file, function(current, previous) {
-     console.log("here")
+    //think we're throwing an error as file doesn't exist
     io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
   })
  

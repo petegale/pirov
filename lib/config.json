@@ -2,5 +2,5 @@
   "web_url":"rov.local",
   "web_port":"3000",
   "stream_file" : "./public/stream/image_stream.jpg",
-  "stream_fps" : 10 
+  "stream_fps" : 20 
 }

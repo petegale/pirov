@@ -1,7 +1,7 @@
 var socket = io();
 
-socket.on('click-back', function (data) {
-	alert ("got data back")
+socket.on('news', function (data) {
+	alert (data.hello)
 });
 
 window.addEventListener("load", function(){

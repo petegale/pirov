@@ -27,6 +27,7 @@ io.on('connection', function(socket){
   
   socket.on('click-test', function(){
     console.log('User clicked');
+    socket.emit('news', { hello: 'world' });
   });
   
 });

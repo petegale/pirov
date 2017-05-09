@@ -25,9 +25,9 @@ io.on('connection', function(socket){
     console.log('User disconnected');
   });
   
-  socket.on('click-test', function(){
+  socket.on('click-test', function(data){
     console.log('User clicked');
-    socket.emit('news', { hello: 'world' });
+    socket.emit('news', data);
   });
   
 });

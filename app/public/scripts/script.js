@@ -1,7 +1,7 @@
 var socket = io();
 
 socket.on('news', function (data) {
-	alert (data.hello)
+	alert (data.width+"x"+data.height)
 });
 
 window.addEventListener("load", function(){
@@ -9,7 +9,9 @@ window.addEventListener("load", function(){
   var button = document.getElementById('hello');
 
   button.addEventListener('click', function() {
-      socket.emit('click-test', { duration: 2 });
+    var sW = document.getElementById("streamcontainer").offsetWidth
+    var sH = document.getElementById("streamcontainer").offsetHeight
+      socket.emit('click-test', { width : sW, height : sH });
   });
 
 });

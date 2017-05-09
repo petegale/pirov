@@ -22,14 +22,12 @@ app.get('/', function (req, res) {
 })
 
 //SOCKET.IO CONNECTIONS
-var sockets = {};
 
 io.on('connection', function(socket){
-  sockets[socket.id] = socket;
-  console.log("Total clients connected : ", Object.keys(sockets).length);
+  console.log("Dashboard connected");
   
   socket.on('disconnect', function(){
-    console.log("user disconected")
+    console.log("Dashboard connected")
     stopStreaming();
   });
   
@@ -47,7 +45,7 @@ function stopStreaming() {
   app.set('watchingFile', false);
   if (proc) proc.kill();
   fs.unwatchFile('./stream/image_stream.jpg');
-  console.log("stop stream")
+  console.log("Stop stream")
 }
  
 function startStreaming(io,data) {
@@ -59,13 +57,12 @@ function startStreaming(io,data) {
   }
  
   var args = ["-w", data.width, "-h", data.height, "-o", config.stream_file, "-t", "999999999", "-tl", 1000/config.stream_fps ];
-  console.log (args);
+  //console.log (args);
   proc = spawn('raspistill', args);
- 
   console.log('Watching for changes...');
   app.set('watchingFile', true);
- 
   fs.watchFile(config.stream_file, function(current, previous) {
+     console.log("here")
     io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
   })
  

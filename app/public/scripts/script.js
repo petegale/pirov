@@ -9,7 +9,6 @@ socket.on('liveStream', function(url) {
 });
 
 window.addEventListener("load", function(){
-
   var StartStreamButton = document.getElementById('StartStreamButton');
   StartStreamButton.addEventListener('click', function() {
     var sW = document.getElementById("streamcontainer").offsetWidth
@@ -18,8 +17,8 @@ window.addEventListener("load", function(){
   });
   
   var StopStreamButton = document.getElementById('StopStreamButton');
-  StartStreamButton.addEventListener('click', function() {
-    socket.emit('stop-stream', { width : sW, height : sH });
+  StopStreamButton.addEventListener('click', function() {
+    socket.emit('stop-stream');
   });
 
 });

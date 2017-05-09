@@ -9,13 +9,16 @@
 <body>
 <div class="stream-parent">
   <div class="stream-container" id="streamcontainer">
-    <img src="http://<%= video_url %>:%= video_port %>/?action=stream"/>
+    <img src="" id="stream">
   </div>
 </div>
 
-<button id="hello" type="button">
-      Click me!
+<button id="StartStreamButton" type="button">
+      Start
   </button>
- <%= foo %>
+  <button id="StopStreamButton" type="button">
+        Stop
+    </button>
+  
 </body>
 </html>

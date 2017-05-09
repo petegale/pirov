@@ -1,6 +1,6 @@
 {
   "web_url":"rov.local",
   "web_port":"3000",
-  "video_url":"rov.local",
-  "video_port":"8080"
+  "stream_file" : "./public/stream/image_stream.jpg",
+  "stream_fps" : 10 
 }

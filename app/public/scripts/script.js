@@ -4,14 +4,22 @@ socket.on('news', function (data) {
 	alert (data.width+"x"+data.height)
 });
 
+socket.on('liveStream', function(url) {
+  $('#stream').attr('src', url);
+});
+
 window.addEventListener("load", function(){
 
-  var button = document.getElementById('hello');
-
-  button.addEventListener('click', function() {
+  var StartStreamButton = document.getElementById('StartStreamButton');
+  StartStreamButton.addEventListener('click', function() {
     var sW = document.getElementById("streamcontainer").offsetWidth
     var sH = document.getElementById("streamcontainer").offsetHeight
-      socket.emit('click-test', { width : sW, height : sH });
+    socket.emit('start-stream', { width : sW, height : sH });
+  });
+  
+  var StopStreamButton = document.getElementById('StopStreamButton');
+  StartStreamButton.addEventListener('click', function() {
+    socket.emit('stop-stream', { width : sW, height : sH });
   });
 
 });

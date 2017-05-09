@@ -2,14 +2,17 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var spawn = require('child_process').spawn;
+var proc;
+var fs = require('fs');
+var config = require("./lib/config.json");
 
 app.use(express.static(__dirname + '/app/public'));
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
 
-var config = require("./lib/config.json");
-//global.word=0;
 
+//WEB SERVER HANDLING SERVING THE DASHBOARD
 app.get('/', function (req, res) {
   var data = {};
   data = config;
@@ -18,20 +21,55 @@ app.get('/', function (req, res) {
   console.log("dashboard loaded")
 })
 
+//SOCKET.IO CONNECTIONS
+var sockets = {};
+
 io.on('connection', function(socket){
-  console.log('User connected');
+  sockets[socket.id] = socket;
+  console.log("Total clients connected : ", Object.keys(sockets).length);
   
   socket.on('disconnect', function(){
-    console.log('User disconnected');
+    console.log("user disconected")
+    stopStreaming();
   });
   
-  socket.on('click-test', function(data){
-    console.log('User clicked');
-    socket.emit('news', data);
+  socket.on('start-stream', function(data) {
+    startStreaming(io,data);
   });
-  
+  socket.on('stop-stream', function() {
+    stopStreaming();
+  });
 });
 
+//STREAM CONTROL FUNCTIONS
+
+function stopStreaming() {
+  app.set('watchingFile', false);
+  if (proc) proc.kill();
+  fs.unwatchFile('./stream/image_stream.jpg');
+  console.log("stop stream")
+}
+ 
+function startStreaming(io,data) {
+  console.log("start stream "+data.height+"x"+data.width)
+ 
+  if (app.get('watchingFile')) {
+    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+    return;
+  }
+ 
+  var args = ["-w", data.width, "-h", data.height, "-o", config.stream_file, "-t", "999999999", "-tl", 1000/config.stream_fps ];
+  console.log (args);
+  proc = spawn('raspistill', args);
+ 
+  console.log('Watching for changes...');
+  app.set('watchingFile', true);
+ 
+  fs.watchFile(config.stream_file, function(current, previous) {
+    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+  })
+ 
+}
 
 
 http.listen(config.web_port, function () {

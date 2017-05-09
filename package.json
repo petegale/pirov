@@ -1,3 +1,4 @@
+{
   "name": "pi-rov",
   "version": "0.2.6",
   "description": "node app for controlling a simple ROV",

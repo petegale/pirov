@@ -1,0 +1,12 @@
+.stream-parent {
+  height: 0;
+  padding-bottom: 42.86%; /* 21:9 */
+  position: relative;
+}
+
+.stream-container {
+  height: 0;
+  padding-bottom: 42.86%; /* 16:9 */
+  position: relative;
+  background: rgba(0,0,0,0.65);
+}

@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>ROV Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="/styles/dash.css">
 </head>
  <script src="/socket.io/socket.io.js"></script>
  <script src="/scripts/script.js"></script>
 <body>
-<img src="http://<%= video_url %>:%= video_port %>/?action=stream"/>
+<div class="stream-parent">
+  <div class="stream-container">
+    <img src="http://<%= video_url %>:%= video_port %>/?action=stream"/>
+  </div>
+</div>
+
 <button id="hello" type="button">
       Click me!
   </button>

@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
@@ -50,7 +50,7 @@ io.on('connection', function(socket){
 function stopStreaming() {
   if (proc)  {
     console.log("killing");
-    proc.kill();
+    proc.kill('SIGINT');
   }
   global.streaming=false;
   console.log("Stop stream")
@@ -65,9 +65,8 @@ function startStreaming(io,data) {
     var s_path=__dirname+"/lib/streamer/";
     var streamCmd= s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\"";
     //proc = exec(streamCmd);
-    proc = exec(streamCmd, function(err, stdout, stderr) {
+    proc = spawn(streamCmd, function(err, stdout, stderr) {
             if (err) throw err;
-            else console.log("output"+stdout);
         });
     global.streaming=true;
     //emit confirmation to dashboard

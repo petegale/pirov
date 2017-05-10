@@ -64,7 +64,7 @@ function startStreaming(io,data) {
   } else {
     var s_path=__dirname+"/lib/streamer/";
     var streamCmd=s_path+"mjpg_streamer"; 
-    var streamCmd="-o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\"";
+    var args="-o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\"";
     //proc = exec(streamCmd);
     proc = exec.execFile(streamCmd, args, function(err, stdout, stderr) {
             if (err) throw err;

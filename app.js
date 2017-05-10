@@ -51,8 +51,11 @@ function stopStreaming() {
   if (proc)  {
     console.log("killing");
     //proc.kill("SIGKILL");
-    proc.stdin.pause();
-    proc.kill();
+    //proc.stdin.pause();
+    //proc.kill("SIGKILL");
+    var kill = exec("sudo kill "+global.sPid , function(err, stdout, stderr) {
+      if (err) throw err;
+    });
   }
   global.streaming=false;
   console.log("Stop stream")
@@ -70,6 +73,8 @@ function startStreaming(io,data) {
             if (err) throw err;
         });
     global.streaming=true;
+    global.sPid=proc.PID;
+    console.log("PID="+global.sPid);
     //emit confirmation to dashboard
     io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");
   }

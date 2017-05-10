@@ -6,7 +6,7 @@ socket.on('news', function (data) {
 
 socket.on('liveStream', function(url) {
   var stream = document.getElementById('stream');
-  stream.src=url);
+  stream.src=url;
 });
 
 window.addEventListener("load", function(){

@@ -48,14 +48,16 @@ io.on('connection', function(socket){
 //STREAM CONTROL FUNCTIONS
 
 function stopStreaming() {
-  if (proc) proc.kill();
+  if (proc)  {
+    console.log("killing");
+    proc.kill();
+  }
   global.streaming=false;
   console.log("Stop stream")
 }
  
 function startStreaming(io,data) {
   console.log("start stream "+data.height+"x"+data.width)
-  console.log(global);
   if (global.streaming) {
     //emit confirmation to dashboard
     io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");
@@ -65,7 +67,7 @@ function startStreaming(io,data) {
     //proc = exec(streamCmd);
     proc = exec(streamCmd, function(err, stdout, stderr) {
             if (err) throw err;
-            else console.log(stdout);
+            else console.log("output"+stdout);
         });
     global.streaming=true;
     //emit confirmation to dashboard

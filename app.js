@@ -34,31 +34,17 @@ io.on('connection', function(socket){
   
   socket.on('disconnect', function(){
     console.log("Dashboard disconnected")
-    stopStreaming();
   });
   
   socket.on('start-stream', function(data) {
     startStreaming(io,data);
-  });
-  socket.on('stop-stream', function() {
-    stopStreaming();
   });
 });
 
 //STREAM CONTROL FUNCTIONS
 
 function stopStreaming() {
-  if (proc)  {
-    console.log("killing");
-    //proc.kill("SIGKILL");
-    //proc.stdin.pause();
-    //proc.kill("SIGKILL");
-    var kill = exec("sudo kill "+global.sPid , function(err, stdout, stderr) {
-      if (err) throw err;
-    });
-  }
-  global.streaming=false;
-  console.log("Stop stream")
+
 }
  
 function startStreaming(io,data) {
@@ -73,7 +59,7 @@ function startStreaming(io,data) {
             if (err) throw err;
         });
     global.streaming=true;
-    global.sPid=proc.PID;
+    global.sPid=proc.pid;
     console.log("PID="+global.sPid);
     //emit confirmation to dashboard
     io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");

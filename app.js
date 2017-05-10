@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var exec = require('child_process');
+var exec = require('child_process').exec;
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
@@ -63,14 +63,8 @@ function startStreaming(io,data) {
     io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");
   } else {
     var s_path=__dirname+"/lib/streamer/";
-    var streamCmd=s_path+"mjpg_streamer"; 
-    var args= [
-      "-o", "\""+s_path+"output_http.so -w ./www\"",
-      "-i", "\""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""
-    ]
-    //"-o \""+ -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\"";
-    //proc = exec(streamCmd);
-    proc = exec.execFile(streamCmd, args, function(err, stdout, stderr) {
+    var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
+    proc = exec(streamCmd, function(err, stdout, stderr) {
             if (err) throw err;
         });
     global.streaming=true;

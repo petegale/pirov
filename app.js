@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var spawn = require('child_process').spawn;
+var exec = require('child_process').execFile();
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
@@ -65,7 +65,7 @@ function startStreaming(io,data) {
     var s_path=__dirname+"/lib/streamer/";
     var streamCmd= s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\"";
     //proc = exec(streamCmd);
-    proc = spawn(streamCmd, function(err, stdout, stderr) {
+    proc = exec(streamCmd, function(err, stdout, stderr) {
             if (err) throw err;
         });
     global.streaming=true;

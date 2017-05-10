@@ -50,7 +50,11 @@ io.on('connection', function(socket){
 function stopStreaming() {
   if (proc)  {
     console.log("killing");
-    proc.kill('SIGINT');
+    proc.kill("SIGKILL");
+    /*
+    proc.stdin.pause();
+    proc.kill();
+    */
   }
   global.streaming=false;
   console.log("Stop stream")

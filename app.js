@@ -10,7 +10,8 @@ var config = require("./lib/config.json");
 app.use(express.static(__dirname + '/app/public'));
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'ejs');
-
+global.streaming = false;
+global.host="";
 
 //WEB SERVER HANDLING SERVING THE DASHBOARD
 app.get('/', function (req, res) {
@@ -18,16 +19,21 @@ app.get('/', function (req, res) {
   data = config;
   data.foo="bar";
   res.render('dashboard',data);
+  //global.host=req.get('host');
+  global.host = global.host.substr(0,global.host.indexOf(":"));
   console.log("dashboard loaded")
 })
 
 //SOCKET.IO CONNECTIONS
 
 io.on('connection', function(socket){
-  console.log("Dashboard connected");
+  global.url=socket.handshake.headers.referer;
+  global.host=global.url.substring(7)
+  global.host=global.host.substring(0,global.host.indexOf(":"));
+  console.log("Dashboard connected to: "+global.host);
   
   socket.on('disconnect', function(){
-    console.log("Dashboard connected")
+    console.log("Dashboard disconnected")
     stopStreaming();
   });
   
@@ -50,24 +56,25 @@ function stopStreaming() {
  
 function startStreaming(io,data) {
   console.log("start stream "+data.height+"x"+data.width)
- 
-  if (app.get('watchingFile')) {
-    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
-    return;
+  console.log(global);
+  if (global.streaming) {
+    //emit confirmation to dashboard
+    io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");
+  } else {
+    var s_path=__dirname+"/lib/streamer/";
+    var streamCmd= s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\"";
+    proc = spawn(streamCmd);
+    console.log(__dirname);
+    global.streaming=true;
+    //emit confirmation to dashboard
+    io.sockets.emit("liveStream","http://192.168.1.222:8080/?action=stream");
   }
- 
-  var args = ["-w", data.width, "-h", data.height, "-o", config.stream_file, "-t", "999999999", "-tl", 1000/config.stream_fps ];
-  //console.log (args);
-  proc = spawn('raspistill', args);
-  console.log('Watching for changes...');
-  app.set('watchingFile', true);
-  fs.watchFile(config.stream_file, function(current, previous) {
-    //think we're throwing an error as file doesn't exist
-    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
-  })
  
 }
 
+function getPosition(string, subString, index) {
+   return string.split(subString, index).join(subString).length;
+}
 
 http.listen(config.web_port, function () {
   console.log('Example app listening on port 3000')

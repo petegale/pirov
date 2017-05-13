@@ -73,6 +73,8 @@ JoystickView = Backbone.View.extend({
         this.state = INACTIVE;
         this.x = 0;
         this.y = 0;
+        sendCommand("vertical",0);
+        sendCommand("rotate",0);
         this.renderSprite();
     },
     move: function(evt){

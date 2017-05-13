@@ -39,14 +39,14 @@ io.on('connection', function(socket){
   socket.on('start-stream', function(data) {
     startStreaming(io,data);
   });
-  socket.on('thrust', function(x) {
-    console.log("Thrust"+x);
+  socket.on('t', function(x) {
+    console.log("t"+x);
   });
-  socket.on('vertical', function(x) {
-    console.log("vertical"+x);
+  socket.on('v', function(x) {
+    console.log("v"+x);
   });
-  socket.on('rotate', function(x) {
-    console.log("rotate"+x);
+  socket.on('r', function(x) {
+    console.log("r"+x);
   });
 });
 

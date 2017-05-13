@@ -10,15 +10,15 @@ socket.on('liveStream', function(url) {
 });
 
 function sendCommand(c,x) {
-  if (c=="thrust") {
+  if (c=="t") {
     x=x-50
     document.getElementById("thrust_out").innerHTML = "Thrust: "+x;
   }
-  if (c=="vertical") {
+  if (c=="v") {
     x=Math.round(x*50);
     document.getElementById("vert_out").innerHTML = "Vertical: "+x;
   }
-  if (c=="rotate") {
+  if (c=="r") {
     x=Math.round(x*50);
     document.getElementById("rotate_out").innerHTML = "Rotate: "+x;
   }
@@ -48,12 +48,12 @@ window.addEventListener("load", function(){
   joystickView.bind("verticalMove", function(y){
       $("#yVal").html(y);
       //Call Socket.io function to emit vertical move y
-      sendCommand("vertical",y);
+      sendCommand("v",y);
   });
   joystickView.bind("horizontalMove", function(x){
       $("#xVal").html(x);
       //Call Socket.io function to emit horizontal move x
-      sendCommand("rotate",x);
+      sendCommand("r",x);
   });
   
   

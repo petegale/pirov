@@ -54,8 +54,11 @@ JoystickView = Backbone.View.extend({
         setTimeout(function(){
             var currentTime = new Date().getTime();
             if(currentTime - self.lastTouch >= SECONDS_INACTIVE * 1000){
+                /*
+                commenting out this code to stop retraction
                 self._retractToMiddle();
                 self.renderSprite();
+              */
             }
             self._retractJoystickForInactivity();
         }, parseInt(1000 / framesPerSec, 10));
@@ -73,8 +76,8 @@ JoystickView = Backbone.View.extend({
         this.state = INACTIVE;
         this.x = 0;
         this.y = 0;
-        sendCommand("vertical",0);
-        sendCommand("rotate",0);
+        sendCommand("v",0);
+        sendCommand("r",0);
         this.renderSprite();
     },
     move: function(evt){

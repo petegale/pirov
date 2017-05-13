@@ -39,6 +39,15 @@ io.on('connection', function(socket){
   socket.on('start-stream', function(data) {
     startStreaming(io,data);
   });
+  socket.on('thrust', function(x) {
+    console.log("Thrust"+x);
+  });
+  socket.on('vertical', function(x) {
+    console.log("vertical"+x);
+  });
+  socket.on('rotate', function(x) {
+    console.log("rotate"+x);
+  });
 });
 
 //STREAM CONTROL FUNCTIONS

@@ -8,6 +8,25 @@
   height: 0;
   padding-bottom: 42.86%; /* 16:9 */
   position: relative;
-  background: rgba(0,0,0,0.65);
   background: url('/images/logo.png') center center no-repeat rgba(0,0,0,0.65);
+}
+.controller {
+  background: rgba(0,0,0,0.15);
+  width:30%;
+  height:150px;
+  float:left;
+  text-align: center
+}
+.controller_M {
+  background: rgba(0,0,0,0.15);
+  width:40%;
+  height:120px;
+  float:left;
+  text-align: center;
+  padding-top:30px;
+}
+#thrust {
+  margin-top: 65px;
+  width:100px;
+   transform: rotate(270deg);
 }

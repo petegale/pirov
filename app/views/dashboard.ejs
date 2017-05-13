@@ -4,18 +4,39 @@
   <title>ROV Dashboard</title>
   <link rel="stylesheet" type="text/css" href="/styles/dash.css">
 </head>
- <script src="/socket.io/socket.io.js"></script>
- <script src="/scripts/script.js"></script>
+ <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+ <script type="text/javascript" src="/scripts/script.js"></script>
+ <script type="text/javascript" src="/scripts/jquery-1.11.2.min.js"></script>
+ <script type="text/javascript" src="/scripts/underscore-min.js"></script>
+ <script type="text/javascript" src="/scripts/backbone-min.js"></script>
+ <script type="text/javascript" src="/scripts/joystick_view.js"></script>
 <body>
 <div class="stream-parent">
   <div class="stream-container" id="streamcontainer">
     <img src="" id="stream">
   </div>
 </div>
+  <script type="text/html" id="joystick-view">
+  <canvas id="joystickCanvas" width="150" height="150>" style="width: 150px; height: 150px;" style="background:0,255,0,1">
+      </canvas>
+  </script>
 
-<button id="StartStreamButton" type="button">
-      Start
-  </button>
-  
+  <div id="joystickContent" class="controller">
+  </div>
+  <div id="switches" class="controller_M">
+    <button id="StartStreamButton" type="button">
+          Start live video
+      </button> <br><br>
+      <span id="thrust_out">Thrust: 0</span><br>
+      <span id="vert_out">Vertical: 0</span><br>
+      <span id="rotate_out">Rotate: 0</span><br>
+  </div>
+  <div id="thruster" class="controller">
+    <input type="range" class="vranger" id="thrust"  oninput="sendCommand('thrust',(this.value))" onchange="sendCommand('thrust',(this.value)" step="1"/>
+    <button id="StopButton">Stop</button>
+  </div>
+
+  <script type="text/javascript">
+  </script>
 </body>
 </html>

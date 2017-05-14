@@ -3,9 +3,12 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var exec = require('child_process').exec;
+var PiServo = require('pi-servo');
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
+
+var svUp = new PiServo(18); 
 
 app.use(express.static(__dirname + '/app/public'));
 app.set('views', __dirname + '/app/views');
@@ -41,10 +44,19 @@ io.on('connection', function(socket){
   });
   socket.on('t', function(x) {
     console.log("t"+x);
+    //scale from -50 +50 to 0-180
+    //need to add servo mixing
+    x=(x+50)*1.8;
+    svUp.open().then(function(){  
+      svUp.setDegree(x); // 0 - 180
   });
+  
   socket.on('v', function(x) {
     console.log("v"+x);
+
+    });
   });
+  
   socket.on('r', function(x) {
     console.log("r"+x);
   });

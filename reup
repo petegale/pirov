@@ -1,0 +1,14 @@
+#!/bin/bash
+clear
+cd ..
+echo "removing old version"
+rm -rf pirov
+echo "downloading new pirov"
+git clone https://github.com/petegale/pirov.git
+cd pirov
+echo "installing pirov"
+npm install
+clear
+echo "indeed.."
+
+

@@ -9,7 +9,7 @@ var fs = require('fs');
 var config = require("./lib/config.json");
 
 
-var svUp = new PiServo(18); 
+var svUp = new PiServo(config.svUp); 
 
 var mixer = {};
 mixer.xIn=0;

@@ -8,6 +8,9 @@ var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
 
+
+var svUp = new PiServo(18); 
+
 var mixer = {};
 mixer.xIn=0;
 mixer.yIn=0;
@@ -20,13 +23,12 @@ mixer.ROut=0;
 mixer.mix = function() {
   //just testing set thrust to Vout
   mixer.VOut=Math.round((mixer.tIn+50)*1.8);
-  console.log(mixer.VOut);
   svUp.open().then(function(){  
     svUp.setDegree(mixer.VOut); // 0 - 180
+      console.log(mixer.VOut);
   });
 }
 
-var svUp = new PiServo(18); 
 
 app.use(express.static(__dirname + '/app/public'));
 app.set('views', __dirname + '/app/views');

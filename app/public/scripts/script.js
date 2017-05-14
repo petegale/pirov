@@ -31,7 +31,7 @@ window.addEventListener("load", function(){
   var StopButton = document.getElementById('StopButton');
   StopButton.addEventListener('click', function() {
     document.getElementById('thrust').value=50;
-    sendCommand('thrust',50); 
+    sendCommand('t',50); 
   });
   
   StartStreamButton.addEventListener('click', function() {

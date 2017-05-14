@@ -8,6 +8,24 @@ var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
 
+var mixer = {};
+mixer.xIn=0;
+mixer.yIn=0;
+mixer.tIn=0;
+
+mixer.VOut=0;
+mixer.LOut=0;
+mixer.ROut=0;
+
+mixer.mix = function() {
+  //just testing set thrust to Vout
+  mixer.VOut=Math.round((mixer.tIn+50)*1.8);
+  console.log(mixer.VOut);
+  svUp.open().then(function(){  
+    svUp.setDegree(mixer.VOut); // 0 - 180
+  });
+}
+
 var svUp = new PiServo(18); 
 
 app.use(express.static(__dirname + '/app/public'));
@@ -43,22 +61,18 @@ io.on('connection', function(socket){
     startStreaming(io,data);
   });
   socket.on('t', function(x) {
-    console.log("t"+x);
-    //scale from -50 +50 to 0-180
-    //need to add servo mixing
-    x=(x+50)*1.8;
-    svUp.open().then(function(){  
-      svUp.setDegree(x); // 0 - 180
+    mixer.tIn=x;
+    mixer.mix();
   });
   
   socket.on('v', function(x) {
-    console.log("v"+x);
-
-    });
+    mixer.yIn=x;
+    mixer.mix();
   });
   
   socket.on('r', function(x) {
-    console.log("r"+x);
+    mixer.xIn=x;
+    mixer.mix();
   });
 });
 

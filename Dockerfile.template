@@ -13,14 +13,13 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
-#Install mjpeg-streamer
+
 RUN apt-get update && apt-get install -y apt-transport-https
 RUN apt-get install -y cmake
 RUN apt-get install -y git
 RUN apt-get install -y apt-utils
 RUN apt-get install -y libjpeg8-dev
-RUN cd /app/lib/mjpg-streamer && make
-RUN cd /app/lib/mjpg-streamer && sudo make install
+
 
 # Copies the package.json first for better cache on later pushes
 COPY package.json package.json
@@ -31,6 +30,10 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
+
+#Install mjpeg-streamer
+RUN cd /app/lib/mjpg-streamer && make
+RUN cd /app/lib/mjpg-streamer && sudo make install
 
 # Enable systemd init system in container
 ENV INITSYSTEM on

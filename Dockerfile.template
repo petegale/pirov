@@ -13,13 +13,8 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
-
-RUN apt-get update && apt-get install -y apt-transport-https
-RUN apt-get install -y cmake
-RUN apt-get install -y git
-RUN apt-get install -y apt-utils
-RUN apt-get install -y libjpeg8-dev
-RUN apt-get install -y make
+RUN apt-get update && apt-get install -yq \
+RUN apt-get install -y build-essential
 
 
 # Copies the package.json first for better cache on later pushes

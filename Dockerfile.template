@@ -19,12 +19,8 @@ RUN apt-get install -y cmake
 RUN apt-get install -y git
 RUN apt-get install -y apt-utils
 RUN apt-get install -y libjpeg8-dev
-RUN git clone https://github.com/jacksonliam/mjpg-streamer.git
-RUN ls
-RUN cd mjpg-streamer
-RUN ls
-RUN cd mjpg-streamer-experimental
-RUN sudo make install
+RUN cd /app/lib/mjpg-streamer && make
+RUN cd /app/lib/mjpg-streamer && sudo make install
 
 # Copies the package.json first for better cache on later pushes
 COPY package.json package.json

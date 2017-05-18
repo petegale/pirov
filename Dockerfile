@@ -9,8 +9,7 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 RUN apt-get update
 RUN apt-get install -yq build-essential
 RUN apt-get install -yq libjpeg8-dev
-#    alsa-utils libasound2-dev && \
-#    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 # Defines our working directory in container
 WORKDIR /usr/src/app
@@ -26,9 +25,11 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 COPY . ./
 
 #Install mjpeg-streamer
-RUN cd /usr/src/app/lib/mjpg-streamer && make
+RUN cd /usr/src/app/lib/mjpg-streamer && make mjpg-streamer
 RUN cd /usr/src/app/lib/mjpg-streamer && sudo make install
+
 #RUN export LD_LIBRARY_PATH=/usr/src/app/lib/streamer/plugins
+
 # Enable systemd init system in container
 ENV INITSYSTEM on
 

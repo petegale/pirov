@@ -29,9 +29,9 @@ COPY . ./
 
 RUN git clone https://github.com/jacksonliam/mjpg-streamer.git 
 
-RUN cd /usr/src/app/lib/mjpg-streamer/mjpg-streamer-experimental && make
-RUN cd /usr/src/app/lib//mjpg-streamer/mjpg-streamer-experimental && make install
-RUN cd /usr/src/app/lib//mjpg-streamer/mjpg-streamer-experimental && chmod +x docker-start.sh
+RUN cd /usr/src/app/mjpg-streamer/mjpg-streamer-experimental && make
+RUN cd /usr/src/app/mjpg-streamer/mjpg-streamer-experimental && make install
+RUN cd /usr/src/app/mjpg-streamer/mjpg-streamer-experimental && chmod +x docker-start.sh
 
 EXPOSE 8080/TCP
 

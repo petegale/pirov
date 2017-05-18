@@ -7,6 +7,7 @@ socket.on('news', function (data) {
 socket.on('liveStream', function(url) {
   var stream = document.getElementById('stream');
   stream.src=url;
+  alert(url)
 });
 
 function sendCommand(c,x) {
@@ -57,8 +58,4 @@ window.addEventListener("load", function(){
   });
   
   
-});
-
-$(document).ready(function(){
-
 });

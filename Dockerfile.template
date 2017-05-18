@@ -8,7 +8,7 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 # for instance if you need ALSA sound utils, just uncomment the lines below.
 
 RUN apt-get update 
-RUN apt-get install -yq libjpeg8-dev
+RUN apt-get install -yq libjpeg8-dev gphoto2 libsdl2-dev
 RUN apt-get install git cmake gcc g++ make kmod net-tools
 
 # Defines our working directory in container

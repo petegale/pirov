@@ -13,6 +13,7 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
+RUN apt-get update && apt-get install -yq \
 RUN apt-get install -y build-essential
 RUN apt-get install -y libjpeg8-dev
 

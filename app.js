@@ -97,13 +97,14 @@ function startStreaming(io,data) {
     input="/app/mjpg-streamer/input_raspicam.so -fps $framerate -r $resolution"
     /app/mjpg-streamer/mjpg_streamer -i "$input" -o "/app/mjpg-streamer/output_http.so -w /app/mjpg-streamer/www -p 80 $auth"
     */
-    var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
-    proc = exec(streamCmd, function(err, stdout, stderr) {
-            if (err) throw err;
-        });
+    var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www --port 8080\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
+    //proc = exec(streamCmd, function(err, stdout, stderr) {
+    //        if (err) throw err;
+    //    });
     global.streaming=true;
     global.sPid=proc.pid;
     console.log("PID="+global.sPid);
+    console.log(streamCmd);
     //emit confirmation to dashboard
     io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");
   }

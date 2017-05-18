@@ -6,16 +6,14 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 
 # use apt-get if you need to install dependencies,
 # for instance if you need ALSA sound utils, just uncomment the lines below.
-#RUN apt-get update && apt-get install -yq \
+RUN apt-get update
+RUN apt-get install -yq build-essential
+RUN apt-get install -yq libjpeg8-dev
 #    alsa-utils libasound2-dev && \
 #    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Defines our working directory in container
 WORKDIR /usr/src/app
-
-RUN apt-get update && apt-get install -yq \
-RUN apt-get install -y build-essential
-RUN apt-get install -y libjpeg8-dev
 
 # Copies the package.json first for better cache on later pushes
 COPY package.json package.json
@@ -30,7 +28,7 @@ COPY . ./
 #Install mjpeg-streamer
 RUN cd /usr/src/app/lib/mjpg-streamer && make
 RUN cd /usr/src/app/lib/mjpg-streamer && sudo make install
-#ßRUN export LD_LIBRARY_PATH=/usr/src/app/lib/streamer/plugins
+#RUN export LD_LIBRARY_PATH=/usr/src/app/lib/streamer/plugins
 # Enable systemd init system in container
 ENV INITSYSTEM on
 

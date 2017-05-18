@@ -90,7 +90,7 @@ function startStreaming(io,data) {
     //emit confirmation to dashboard
     io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");
   } else {
-    var s_path=__dirname+"/app/mjpg-streamer/";
+    var s_path=__dirname+"/mjpg-streamer/";
     /*
     modprobe bcm2835-v4l2
     input="/app/mjpg-streamer/input_raspicam.so -fps $framerate -r $resolution"

@@ -27,18 +27,17 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
 
-#Install mjpeg-streamer
-#RUN /usr/src/app/gphoto.sh --stable
-
 RUN git clone https://github.com/jacksonliam/mjpg-streamer.git 
 
-WORKDIR /mjpg-streamer/mjpg-streamer-experimental
+RUN cd /usr/src/app/lib/mjpg-streamer/mjpg-streamer-experimental && make
+RUN cd /usr/src/app/lib//mjpg-streamer/mjpg-streamer-experimental && make install
+RUN cd /usr/src/app/lib//mjpg-streamer/mjpg-streamer-experimental && chmod +x docker-start.sh
 
-RUN make \ 
-    && make install \
-    && chmod +x docker-start.sh
+EXPOSE 8080/TCP
 
-#RUN export LD_LIBRARY_PATH=/usr/src/app/lib/streamer/plugins
+ENTRYPOINT ["/mjpg-streamer/mjpg-streamer-experimental/docker-start.sh", "output_http.so -w ./www"]
+
+CMD ["input_uvc.so"]
 
 # Enable systemd init system in container
 ENV INITSYSTEM on

@@ -7,7 +7,7 @@ LABEL Description="A Docker image for mjpg_streamer." Version="0.3"
 # Need to run container with the device: docker run -t -i -p 8080:8080/tcp --device=/dev/video0 image:tag
 RUN git clone https://github.com/jacksonliam/mjpg-streamer.git 
 
-WORKDIR /mjpg-streamer/mjpg-streamer-experimental
+WORKDIR /mjpg-streamer
 
 RUN make \ 
     && make install \
@@ -15,6 +15,6 @@ RUN make \
 
 EXPOSE 8080/TCP
 
-ENTRYPOINT ["/mjpg-streamer/mjpg-streamer-experimental/docker-start.sh", "output_http.so -w ./www"]
+ENTRYPOINT ["/mjpg-streamer/docker-start.sh", "output_http.so -w ./www"]
 
 CMD ["input_uvc.so"]

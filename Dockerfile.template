@@ -13,6 +13,13 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
+#Install mjpeg-streamer
+RUN sudo apt-get install cmake libjpeg8-dev
+RUN git clone https://github.com/jacksonliam/mjpg-streamer.git
+RUN cd mjpg-streamer
+RUN cd mjpg-streamer-experimental
+RUN sudo make install
+
 # Copies the package.json first for better cache on later pushes
 COPY package.json package.json
 

@@ -25,8 +25,8 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 COPY . ./
 
 #Install mjpeg-streamer
-RUN cd /usr/src/app/lib/mjpg-streamer && make mjpg-streamer
-RUN cd /usr/src/app/lib/mjpg-streamer && sudo make install
+RUN cd /usr/src/app/lib/mjpg-streamer && make
+RUN cd /usr/src/app/lib/mjpg-streamer && make install
 
 #RUN export LD_LIBRARY_PATH=/usr/src/app/lib/streamer/plugins
 

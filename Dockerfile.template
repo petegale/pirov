@@ -9,7 +9,8 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 
 RUN apt-get update 
 RUN apt-get install git cmake gcc g++ make kmod net-tools build-essential pkg-config
-RUN apt-get install -yq libjpeg8-dev libsdl2-dev
+RUN apt-get install libsdl2-dev
+RUN apt-get install -yq libjpeg8-dev python-dev python-numpy
 RUN apt-get install libopencv-dev
 
 # Defines our working directory in container

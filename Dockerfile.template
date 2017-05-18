@@ -30,8 +30,13 @@ COPY . ./
 #Install mjpeg-streamer
 #RUN /usr/src/app/gphoto.sh --stable
 
-RUN cd /usr/src/app/lib/mjpg-streamer && make
-RUN cd /usr/src/app/lib/mjpg-streamer && make install
+RUN git clone https://github.com/jacksonliam/mjpg-streamer.git 
+
+WORKDIR /mjpg-streamer/mjpg-streamer-experimental
+
+RUN make \ 
+    && make install \
+    && chmod +x docker-start.sh
 
 #RUN export LD_LIBRARY_PATH=/usr/src/app/lib/streamer/plugins
 

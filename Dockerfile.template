@@ -12,6 +12,7 @@ RUN apt-get install git cmake gcc g++ make kmod net-tools build-essential pkg-co
 RUN apt-get install libsdl2-dev
 RUN apt-get install -yq libjpeg8-dev python-dev python-numpy
 RUN apt-get install libopencv-dev
+RUN apt-get install libgphoto2-dev
 
 # Defines our working directory in container
 WORKDIR /usr/src/app
@@ -27,7 +28,7 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 COPY . ./
 
 #Install mjpeg-streamer
-RUN /usr/src/app/gphoto.sh --stable
+#RUN /usr/src/app/gphoto.sh --stable
 
 RUN cd /usr/src/app/lib/mjpg-streamer && make
 RUN cd /usr/src/app/lib/mjpg-streamer && make install

@@ -109,5 +109,5 @@ function getPosition(string, subString, index) {
 }
 
 http.listen(config.web_port, function () {
-  console.log('Listening on port 3000')
+  console.log('Listening on port: '+config.web_port)
 })

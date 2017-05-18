@@ -90,7 +90,7 @@ function startStreaming(io,data) {
     //emit confirmation to dashboard
     io.sockets.emit("liveStream","http://"+global.host+":8080/?action=stream");
   } else {
-    var s_path=__dirname+"/lib/streamer/";
+    var s_path=__dirname+"/lib/mjpg-streamer/";
     var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
     proc = exec(streamCmd, function(err, stdout, stderr) {
             if (err) throw err;

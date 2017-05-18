@@ -2,29 +2,17 @@
 # see more about dockerfile templates here: http://docs.resin.io/deployment/docker-templates/
 # and about resin base images here: http://docs.resin.io/runtime/resin-base-images/
 # Note the node:slim image doesn't have node-gyp
-FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
+FROM resin/%%RESIN_MACHINE_NAME%%-node:onbuild
 
 # use apt-get if you need to install dependencies,
 # for instance if you need ALSA sound utils, just uncomment the lines below.
 
-RUN apt-get update 
-RUN apt-get install git cmake gcc g++ make kmod net-tools build-essential pkg-config
-RUN apt-get install libsdl2-dev
-RUN apt-get install -yq libjpeg8-dev python-dev python-numpy python-scipy
-RUN apt-get install libgphoto2-dev
-	
-RUN git clone https://github.com/itseez/opencv.git /usr/local/src/opencv 
+RUN apt-get update
+RUN apt-get install -y libjpeg8-dev imagemagick libv4l-dev make cmake g++ build-essential libraspberrypi-dev
 
-RUN cd /usr/local/src/opencv && \
-mkdir release && cd release && \
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
-
-RUN cd /usr/local/src/opencv/release && \
-make && make install
-
-RUN rm -rf /usr/local/src/opencv \
-	&& apt-get purge -y cmake \
-	&& apt-get autoremove -y --purge
+COPY mjpg-streamer /app/mjpg-streamer
+RUN ln -s /usr/include/linux/videodev2.h /usr/include/linux/videodev.h
+RUN cd /app/mjpg-streamer; make USE_LIBV4L2=true clean all
 
 # Defines our working directory in container
 WORKDIR /usr/src/app
@@ -39,17 +27,6 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
 
-RUN git clone https://github.com/jacksonliam/mjpg-streamer.git 
-
-RUN cd /usr/src/app/mjpg-streamer/mjpg-streamer-experimental && make
-RUN cd /usr/src/app/mjpg-streamer/mjpg-streamer-experimental && make install
-RUN cd /usr/src/app/mjpg-streamer/mjpg-streamer-experimental && chmod +x docker-start.sh
-
-EXPOSE 8080/TCP
-
-ENTRYPOINT ["/mjpg-streamer/mjpg-streamer-experimental/docker-start.sh", "output_http.so -w ./www"]
-
-CMD ["input_uvc.so"]
 
 # Enable systemd init system in container
 ENV INITSYSTEM on

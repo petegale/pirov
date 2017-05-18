@@ -8,8 +8,17 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 # for instance if you need ALSA sound utils, just uncomment the lines below.
 
 RUN apt-get update 
+RUN apt-get install git cmake gcc g++ make kmod net-tools build-essential pkg-config
 RUN apt-get install -yq libjpeg8-dev libsdl2-dev libopencv-dev
-RUN apt-get install git cmake gcc g++ make kmod net-tools
+RUN sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+RUN apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+RUN apt-get install libxvidcore-dev libx264-dev
+RUN apt-get install libgtk2.0-dev
+RUN apt-get install libatlas-base-dev gfortran
+RUN apt-get install python2.7-dev python3-dev
+RUN git clone https://github.com/opencv/opencv.git
+RUN cd /usr/src/app/opencv && make
+RUN cd /usr/src/app/opencv && make install
 
 # Defines our working directory in container
 WORKDIR /usr/src/app

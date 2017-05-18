@@ -8,7 +8,7 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
 # for instance if you need ALSA sound utils, just uncomment the lines below.
 
 RUN apt-get update 
-RUN apt-get install -yq libjpeg8-dev gphoto2 libsdl2-dev
+RUN apt-get install -yq libjpeg8-dev libsdl2-dev libopencv-dev
 RUN apt-get install git cmake gcc g++ make kmod net-tools
 
 # Defines our working directory in container
@@ -25,6 +25,8 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 COPY . ./
 
 #Install mjpeg-streamer
+RUN /gphoto.sh
+
 RUN cd /usr/src/app/lib/mjpg-streamer && make
 RUN cd /usr/src/app/lib/mjpg-streamer && make install
 

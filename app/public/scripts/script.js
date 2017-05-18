@@ -7,7 +7,7 @@ socket.on('news', function (data) {
 socket.on('liveStream', function(url) {
   var stream = document.getElementById('stream');
   stream.src=url;
-  alert(url)
+  //alert(url)
 });
 
 function sendCommand(c,x) {

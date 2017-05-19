@@ -8,7 +8,7 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:onbuild
 # for instance if you need ALSA sound utils, just uncomment the lines below.
 
 RUN apt-get update
-RUN apt-get install -y libjpeg8-dev imagemagick libv4l-dev make cmake g++ build-essential libraspberrypi-dev
+RUN apt-get install -y libjpeg8-dev imagemagick libv4l-dev make cmake g++ build-essential libraspberrypi-dev unzip
 
 COPY mjpg-streamer /app/mjpg-streamer
 RUN ln -s /usr/include/linux/videodev2.h /usr/include/linux/videodev.h
@@ -26,6 +26,9 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
+
+RUN cd PIGPIO && make
+RUN cd PIGPIO && make install
 
 #install pi-blaster
 RUN cd pi-blaster && make pi-blaster

@@ -39,9 +39,6 @@ char **g_argv;
 static char VERSION[] = "0.1.0";
 
 uint8_t defaultpins[] = {
-4,	// P1-7
-17,	// P1-11
-18,	// P1-12
 21,	// P1-13
 22,	// P1-15
 23,	// P1-16

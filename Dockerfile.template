@@ -28,7 +28,7 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 COPY . ./
 
 #install pi-blaster
-RUN cd /app/pi-blaster && make pi-blaster
+RUN cd pi-blaster && make pi-blaster
 
 # Enable systemd init system in container
 ENV INITSYSTEM on

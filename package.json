@@ -12,7 +12,7 @@
   "dependencies": {
     "ejs": "2.5.6",
     "express": "4.15.2",
-    "pigpio": "^0.5.1",
+    "pi-blaster.js": "^0.1.1",
     "socket.io": "^1.7.3"
   },
   "repository": {

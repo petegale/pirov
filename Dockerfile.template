@@ -27,9 +27,6 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
 
-RUN cd PIGPIO && make
-RUN cd PIGPIO && make install
-
 #install pi-blaster
 RUN cd pi-blaster && make pi-blaster
 

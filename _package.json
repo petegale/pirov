@@ -1,0 +1,28 @@
+{
+  "name": "pi-rov",
+  "version": "0.2.6",
+  "description": "node app for controlling a simple ROV",
+  "engines": {
+    "node": "4.2.4"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "modprobe bcm2835-v4l2 && sudo ./pi-blaster/pi-blaster && sudo node app.js"
+  },
+  "dependencies": {
+    "ejs": "2.5.6",
+    "express": "4.15.2",
+    "pi-blaster.js": "^0.1.1",
+    "socket.io": "^1.7.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/petegale/pirov.git"
+  },
+  "keywords": [
+    "rov",
+    "video",
+    "raspberry"
+  ],
+  "license": "MIT"
+}

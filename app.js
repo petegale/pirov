@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var exec = require('child_process').exec;
-var piblaster = require("pi-blaster.js"); // Import package
+//var piblaster = require("pi-blaster.js"); // Import package
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");

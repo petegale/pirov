@@ -11,7 +11,7 @@ var config = require("./lib/config.json");
 
 //var svUp = new PiServo(config.svUp); 
 //bit of a test
-piblaster.setPwm(0, 0.9); // Sets servo on pin 22 to 90 %
+piblaster.setPwm(1, 0.9); // Sets servo on pin 22 to 90 %
 
 var mixer = {};
 mixer.xIn=0;

@@ -15,7 +15,7 @@ var config = require("./lib/config.json");
 var piblaster = require('pi-blaster.js');
 piblaster.setPwm(23, 0.2 ); // 20% brightness
 
-var svUp = new PiServo(config.svUp); 
+//var svUp = new PiServo(config.svUp); 
 //svUp.setDegree(100); //100 degrees
 
 var mixer = {};
@@ -30,10 +30,10 @@ mixer.ROut=0;
 mixer.mix = function() {
   //just testing set thrust to Vout
   mixer.VOut=Math.round((mixer.tIn+50)*1.8);
-  svUp.open().then(function(){  
+  //svUp.open().then(function(){  
     //svUp.setDegree(mixer.VOut); // 0 - 180
       console.log(mixer.VOut);
-  });
+  //});
 }
 
 

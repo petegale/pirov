@@ -3,13 +3,13 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var exec = require('child_process').exec;
-var PiServo = require('pi-servo');
+var piblaster = require("pi-blaster.js"); // Import package
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
 
 
-var svUp = new PiServo(config.svUp); 
+//var svUp = new PiServo(config.svUp); 
 
 var mixer = {};
 mixer.xIn=0;
@@ -23,10 +23,10 @@ mixer.ROut=0;
 mixer.mix = function() {
   //just testing set thrust to Vout
   mixer.VOut=Math.round((mixer.tIn+50)*1.8);
-  svUp.open().then(function(){  
-    svUp.setDegree(mixer.VOut); // 0 - 180
+  //svUp.open().then(function(){  
+    //svUp.setDegree(mixer.VOut); // 0 - 180
       console.log(mixer.VOut);
-  });
+ // });
 }
 
 

@@ -29,8 +29,8 @@ COPY . ./
 
 #install pi-blaster
 RUN cd pi-blaster && make pi-blaster
-#CMD ["bash", "/app/start.sh"]
-RUN cd /app/pi-blaster && ./pi-blaster 22 && echo "0=0.1" > /dev/pi-blaster
+#CMD ["bash", "/app/ç"]
+#RUN cd /app/pi-blaster && ./pi-blaster 22 && echo "0=0.1" > /dev/pi-blaster
 
 # Enable systemd init system in container
 ENV INITSYSTEM on

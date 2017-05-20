@@ -3,13 +3,15 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var exec = require('child_process').exec;
-//var piblaster = require("pi-blaster.js"); // Import package
+var piblaster = require("pi-blaster.js"); // Import package
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
 
 
 //var svUp = new PiServo(config.svUp); 
+//bit of a test
+piblaster.setPwm(0, 0.9); // Sets servo on pin 22 to 90 %
 
 var mixer = {};
 mixer.xIn=0;

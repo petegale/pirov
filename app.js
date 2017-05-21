@@ -7,6 +7,8 @@ var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
 
+var Gpio = require('pigpio').Gpio,
+
 
 var mixer = {};
 mixer.xIn=0;

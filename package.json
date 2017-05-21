@@ -9,8 +9,7 @@
   "dependencies": {
     "ejs": "2.5.6",
     "express": "4.15.2",
-    "pi-blaster.js": "^0.1.1",
-    "pi-servo": "^1.0.2",
+    "pigpio":"0.5.1",
     "socket.io": "^1.7.3"
   },
   "repository": {

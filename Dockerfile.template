@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 
 RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip
 RUN unzip pigpio.zip
-RUN cd PIGPIO && make
+RUN cd PIGPIO && sudo make
 RUN cd PIGPIO && sudo make install
 
 # Copies the package.json first for better cache on later pushes

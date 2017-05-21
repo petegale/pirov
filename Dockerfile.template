@@ -17,7 +17,8 @@ RUN cd /app/mjpg-streamer; make USE_LIBV4L2=true clean all
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
-
+RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip
+RUN unzip pigpio.zip
 RUN cd PIGPIO && make
 RUN cd PIGPIO && sudo make install
 

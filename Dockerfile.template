@@ -17,11 +17,6 @@ RUN cd /app/mjpg-streamer; make USE_LIBV4L2=true clean all
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
-RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip
-RUN unzip pigpio.zip
-RUN cd PIGPIO && sudo make
-RUN cd PIGPIO && sudo make install
-
 # Copies the package.json first for better cache on later pushes
 COPY package.json package.json
 
@@ -31,6 +26,11 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
+
+RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip
+RUN unzip pigpio.zip
+RUN cd PIGPIO && sudo make
+RUN cd PIGPIO && sudo make install
 
 # Enable systemd init system in container
 ENV INITSYSTEM on

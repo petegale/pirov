@@ -65,7 +65,8 @@ io.on('connection', function(socket){
     startStreaming(io,data);
   });
   socket.on('l', function(x) {
-    piblaster.setPwm(config.svLED, x);
+    x=x/100;
+    piblaster.setPwm(config.svLED,x);
     console.log("lights to: "+x)
   });
   

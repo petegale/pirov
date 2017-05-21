@@ -6,34 +6,34 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:onbuild
 
 # use apt-get if you need to install dependencies,
 # for instance if you need ALSA sound utils, just uncomment the lines below.
-
+RUN echo "point 1"
 RUN apt-get update
 RUN apt-get install -y libjpeg8-dev imagemagick libv4l-dev make cmake g++ gcc build-essential libraspberrypi-dev unzip autoconf automake
-
+RUN echo "point 2"
 COPY mjpg-streamer /app/mjpg-streamer
 RUN ln -s /usr/include/linux/videodev2.h /usr/include/linux/videodev.h
 RUN cd /app/mjpg-streamer; make USE_LIBV4L2=true clean all
-
+RUN echo "point 3"
 # Defines our working directory in container
 WORKDIR /usr/src/app
-
+RUN echo "point 4"
 # Copies the package.json first for better cache on later pushes
 COPY package.json package.json
-
+RUN echo "point 5"
 # This install npm dependencies on the resin.io build server,
 # making sure to clean up the artifacts it creates in order to reduce the image size.
 RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf /tmp/*
-
+RUN echo "point 6"
 # This will copy all files in our root to the working  directory in the container
 COPY . ./
-
+RUN echo "point 7"
 RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip
 RUN unzip pigpio.zip
 RUN cd PIGPIO && sudo make
 RUN cd PIGPIO && sudo make install
-
+RUN echo "point 8"
 # Enable systemd init system in container
 ENV INITSYSTEM on
-
+RUN echo "point 9"
 # server.js will run when container starts up on the device
 CMD ["npm", "start"]

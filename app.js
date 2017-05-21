@@ -11,8 +11,6 @@ var config = require("./lib/config.json");
 
 
 //bit of a test
-
-var piblaster = require('pi-blaster.js');
 piblaster.setPwm(23, 0.2 ); // 20% brightness
 
 //var svUp = new PiServo(config.svUp); 

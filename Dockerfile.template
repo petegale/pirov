@@ -32,6 +32,7 @@ RUN cd pi-blaster && ./autogen.sh
 RUN cd pi-blaster && ./configure
 RUN cd pi-blaster && make
 #RUN cd pi-blaster sudo make install
+#adding comment
 
 # Enable systemd init system in container
 ENV INITSYSTEM on

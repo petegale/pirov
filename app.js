@@ -11,7 +11,7 @@ var servoMax=2500;
 
 var Gpio = require('pigpio').Gpio;
 var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
-
+var LED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
 
 var mixer = {};
 mixer.xIn=0;
@@ -63,8 +63,8 @@ io.on('connection', function(socket){
     startStreaming(io,data);
   });
   socket.on('l', function(x) {
-    x=x/100;
-    //piblaster.setPwm(config.svLED,x);
+    var ScaledX=x*(255/100);
+    LED.pwmWrite(ScaledX);
     console.log("lights to: "+x)
   });
   

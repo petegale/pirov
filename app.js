@@ -26,7 +26,7 @@ mixer.mix = function() {
   //just testing set thrust to Vout
   mixer.tIn=mixer.tIn+50;
   mixer.VOut = (mixer.tIn*((servoMax-servoMin)/100))+servoMin;
-  svUp.servoWrite(pulseWidth);
+  svUp.servoWrite(mixer.VOut);
   console.log(mixer.VOut);
 }
 

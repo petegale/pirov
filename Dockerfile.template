@@ -8,7 +8,7 @@ FROM resin/%%RESIN_MACHINE_NAME%%-node:onbuild
 # for instance if you need ALSA sound utils, just uncomment the lines below.
 
 RUN apt-get update
-RUN apt-get install -y libjpeg8-dev imagemagick libv4l-dev make cmake g++ build-essential libraspberrypi-dev unzip autoconf automake
+RUN apt-get install -y libjpeg8-dev imagemagick libv4l-dev make cmake g++ gcc build-essential libraspberrypi-dev unzip autoconf automake
 
 COPY mjpg-streamer /app/mjpg-streamer
 RUN ln -s /usr/include/linux/videodev2.h /usr/include/linux/videodev.h

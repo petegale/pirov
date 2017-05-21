@@ -26,13 +26,16 @@
   <div id="switches" class="controller_M">
     <button id="StartStreamButton" type="button">
           Start live video
-      </button> <br><br>
+      </button><br>
       <span id="thrust_out">Thrust: 0</span><br>
       <span id="vert_out">Vertical: 0</span><br>
       <span id="rotate_out">Rotate: 0</span><br>
+      <span id="light_out">Lights: 0</span><br>
+      
+      <input type="range" class="lranger" id="lights" value="0" oninput="sendCommand('l',(this.value))" onchange="sendCommand('l',(this.value)" step="1"/>
   </div>
   <div id="thruster" class="controller">
-    <input type="range" class="vranger" id="thrust"  oninput="sendCommand('t',(this.value))" onchange="sendCommand('t',(this.value)" step="1"/>
+    <input type="range" class="vranger" id="thrust" oninput="sendCommand('t',(this.value))" onchange="sendCommand('t',(this.value)" step="1"/>
     <button id="StopButton">Stop</button>
   </div>
 

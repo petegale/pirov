@@ -23,6 +23,10 @@ function sendCommand(c,x) {
     x=Math.round(x*50);
     document.getElementById("rotate_out").innerHTML = "Rotate: "+x;
   }
+  if (c=="l") {
+    //x=Math.round(x*50);
+    document.getElementById("light_out").innerHTML = "Lights: "+x;
+  }
   socket.emit(c,x);
   
 }

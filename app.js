@@ -10,9 +10,8 @@ var fs = require('fs');
 var config = require("./lib/config.json");
 
 
-//bit of a test
-piblaster.setPwm(23, 0.2 ); // 20% brightness
-
+//set lights to 0
+piblaster.setPwm(config.svLED, 0);
 var svUp = new PiServo(config.svUp); 
 
 var mixer = {};
@@ -65,6 +64,11 @@ io.on('connection', function(socket){
   socket.on('start-stream', function(data) {
     startStreaming(io,data);
   });
+  socket.on('l', function(x) {
+    piblaster.setPwm(config.svLED, x);
+    console.log("lights to: "+x)
+  });
+  
   socket.on('t', function(x) {
     mixer.tIn=x;
     mixer.mix();

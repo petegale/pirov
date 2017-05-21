@@ -63,8 +63,8 @@ io.on('connection', function(socket){
     startStreaming(io,data);
   });
   socket.on('l', function(x) {
-    var ScaledX=x*(255/100);
-    LED.pwmWrite(ScaledX);
+    x=Math.rounnd(x*(255/100));
+    LED.pwmWrite(x);
     console.log("lights to: "+x)
   });
   

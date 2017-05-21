@@ -6,8 +6,11 @@ var exec = require('child_process').exec;
 var proc;
 var fs = require('fs');
 var config = require("./lib/config.json");
+var servoMin=500;
+var servoMax=2500;
 
-var Gpio = require('pigpio').Gpio,
+var Gpio = require('pigpio').Gpio;
+var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
 
 
 var mixer = {};
@@ -21,11 +24,10 @@ mixer.ROut=0;
 
 mixer.mix = function() {
   //just testing set thrust to Vout
-  mixer.VOut=Math.round((mixer.tIn+50)*1.8);
-  //svUp.open().then(function(){  
-    //svUp.setDegree(mixer.VOut); // 0 - 180
-      console.log(mixer.VOut);
-  //});
+  mixer.tIn=mixer.tIn+50;
+  mixer.VOut = (mixer.tIn*((servoMax-servoMin)/100))+servoMin;
+  svUp.servoWrite(pulseWidth);
+  console.log(mixer.VOut);
 }
 
 
@@ -62,7 +64,7 @@ io.on('connection', function(socket){
   });
   socket.on('l', function(x) {
     x=x/100;
-    piblaster.setPwm(config.svLED,x);
+    //piblaster.setPwm(config.svLED,x);
     console.log("lights to: "+x)
   });
   
@@ -95,7 +97,7 @@ function startStreaming(io,data) {
     io.sockets.emit("liveStream",global.url+":8080/?action=stream");
   } else {
     //var s_path=__dirname+"/app/mjpg-streamer/";
-    var s_path="/app/mjpg-streamer/";
+    var s_path="/home/pi/mjpg-streamer/";
     var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www --port 8080\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
     proc = exec(streamCmd, function(err, stdout, stderr) {
             if (err) throw err;

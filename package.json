@@ -2,9 +2,6 @@
   "name": "pi-rov",
   "version": "0.2.6",
   "description": "node app for controlling a simple ROV",
-  "engines": {
-    "node": "4.2.4"
-  },
   "main": "app.js",
   "scripts": {
     "start": "modprobe bcm2835-v4l2 && node app.js"

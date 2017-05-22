@@ -12,6 +12,7 @@ var servoMax=2500;
 var Gpio = require('pigpio').Gpio;
 var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
 var svLED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
+svLED.pwmWrite(255);
 
 var mixer = {};
 mixer.xIn=0;

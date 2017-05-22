@@ -2,9 +2,10 @@
   "web_url":"rov.local",
   "web_port":"80",
   "stream_file" : "./public/stream/image_stream.jpg",
-  "stream_fps" : 5,
-  "svUp": 23,
-  "svL": 24,
-  "svR": 25,
-  "svLED": 21  
+  "stream_fps" : 8,
+  "svUp":23,
+  "svL":24,
+  "svR":25,
+  "svLED":21,
+  "foo":"bar"
 }

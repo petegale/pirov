@@ -11,7 +11,7 @@ var servoMax=2500;
 
 var Gpio = require('pigpio').Gpio;
 var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
-var LED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
+var svLED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
 
 var mixer = {};
 mixer.xIn=0;
@@ -64,7 +64,7 @@ io.on('connection', function(socket){
   });
   socket.on('l', function(x) {
     x=Math.rounnd(x*(255/100));
-    LED.pwmWrite(x);
+    svLED.pwmWrite(x);
     console.log("lights to: "+x)
   });
   

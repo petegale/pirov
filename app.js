@@ -14,7 +14,7 @@ var lightStatus=false;
 var serverStatus="dev";
 
 if (isPi()) {
-  www_port = prod_port;
+  www_port = config.prod_port;
   var Gpio = require('pigpio').Gpio;
   var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
   var svLED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});

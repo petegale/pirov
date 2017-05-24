@@ -8,7 +8,7 @@ git clone https://github.com/petegale/pirov.git
 cd pirov
 echo "installing pirov"
 npm install
-clear
+cd ..
 echo "indeed.."
 
 

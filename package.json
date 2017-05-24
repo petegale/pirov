@@ -4,7 +4,7 @@
   "description": "node app for controlling a simple ROV",
   "main": "app.js",
   "scripts": {
-    "start": "modprobe bcm2835-v4l2 && ./pi-blaster/pi-blaster node app.js"
+    "start": "modprobe bcm2835-v4l2 && sudo node app.js"
   },
   "dependencies": {
     "detect-rpi": "^1.1.0",

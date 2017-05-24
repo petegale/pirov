@@ -35,9 +35,10 @@ function safeServoWrite(gpio,val) {
   }
   val=(val*((servoMax-servoMin)/100))+servoMin;
   if (serverStatus == "live") {
+    console.log(logOut+"Live out "+val);
     gpio.servoWrite(val);
   } else {
-    console.log(logOut+"out "+val);
+    console.log(logOut+"Sim out "+val);
   }
 }
 
@@ -66,7 +67,7 @@ mixer.mix = function() {
     //probably need to handle backwards differently 
   }
   
-  //send mized signal to motors
+  //send mixed signal to motors
   console.log("send up");
   safeServoWrite(svUp,mixer.VOut);
   console.log("send Left");

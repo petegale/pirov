@@ -7,9 +7,10 @@
     "start": "modprobe bcm2835-v4l2 && ./pi-blaster/pi-blaster node app.js"
   },
   "dependencies": {
+    "detect-rpi": "^1.1.0",
     "ejs": "2.5.6",
     "express": "4.15.2",
-    "pigpio":"0.5.1",
+    "pigpio": "0.5.1",
     "socket.io": "^1.7.3"
   },
   "repository": {

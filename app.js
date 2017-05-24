@@ -8,11 +8,38 @@ var fs = require('fs');
 var config = require("./lib/config.json");
 var servoMin=500;
 var servoMax=2500;
+var isPi = require('detect-rpi');
+var www_port=config.dev_port;
+var lightStatus=false;
+var serverStatus="dev";
 
-var Gpio = require('pigpio').Gpio;
-var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
-var svLED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
-svLED.pwmWrite(255);
+if (isPi()) {
+  www_port = prod_port;
+  var Gpio = require('pigpio').Gpio;
+  var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
+  var svLED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
+  var svLeft = new Gpio(config.svL, {mode: Gpio.OUTPUT});
+  var svRight = new Gpio(config.svR, {mode: Gpio.OUTPUT});
+  console.log("Servo control is LIVE");
+  serverStatus = "live";
+} else {
+  console.log("Servo control is SIMULATED");
+}
+
+function safeServoWrite(gpio,val) {
+  //safely handle servo values from -50 to +50
+  var logOut = "in ="+val;
+  val=val+50;
+  if (val>100) {
+    val=100;
+  }
+  val=(val*((servoMax-servoMin)/100))+servoMin;
+  if (serverStatus == "live") {
+    gpio.servoWrite(val);
+  } else {
+    console.log(logOut+"out "+val);
+  }
+}
 
 var mixer = {};
 mixer.xIn=0;
@@ -24,11 +51,28 @@ mixer.LOut=0;
 mixer.ROut=0;
 
 mixer.mix = function() {
-  //just testing set thrust to Vout
-  mixer.tIn=mixer.tIn+50;
-  mixer.VOut = (mixer.tIn*((servoMax-servoMin)/100))+servoMin;
-  svUp.servoWrite(mixer.VOut);
-  console.log(mixer.VOut);
+  //up and down are independent so just pass through
+  mixer.VOut=mixer.yIn;
+  //tIn = thrust, so pass this to both left and right
+  mixer.ROut = mixer.tIn;
+  mixer.LOut = mixer.tIn;
+
+  //now modify this for cases of rotation via xIn
+  if (mixer.tIn>0) {
+    //going forward
+    mixer.LOut=mixer.LOut+mixer.xIn;
+    mixer.ROut=mixer.ROut-mixer.xIn;
+  } else {
+    //probably need to handle backwards differently 
+  }
+  
+  //send mized signal to motors
+  console.log("send up");
+  safeServoWrite(svUp,mixer.VOut);
+  console.log("send Left");
+  safeServoWrite(svLeft,mixer.LOut);
+  console.log("send right");
+  safeServoWrite(svRight,mixer.ROut);
 }
 
 
@@ -64,9 +108,19 @@ io.on('connection', function(socket){
     startStreaming(io,data);
   });
   socket.on('l', function(x) {
-    x=Math.rounnd(x*(255/100));
-    svLED.pwmWrite(x);
-    console.log("lights to: "+x)
+    if (lightStatus=="on") {
+      //Lights are already on, turn off
+      lightStatus = "off";
+      safeServoWrite(svLED,servoMin);
+    } else {
+      //Lights are off so turn them on
+      lightStatus =  "on";
+      safeServoWrite(svLED,servoMax);
+    }
+    console.log("lights: "+lightStatus);
+    //emit confirmation to dashboard
+    io.sockets.emit("lightStatus",lightStatus);
+    
   });
   
   socket.on('t', function(x) {
@@ -100,12 +154,15 @@ function startStreaming(io,data) {
     //var s_path=__dirname+"/app/mjpg-streamer/";
     var s_path="/home/pi/mjpg-streamer/";
     var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www --port 8080\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
-    proc = exec(streamCmd, function(err, stdout, stderr) {
-            if (err) throw err;
-        });
+    if (isPi()) {
+      proc = exec(streamCmd, function(err, stdout, stderr) {
+        if (err) throw err;
+      });
+      global.sPid=proc.pid;
+      console.log("PID="+global.sPid);
+    }
     global.streaming=true;
-    global.sPid=proc.pid;
-    console.log("PID="+global.sPid);
+    
     console.log(streamCmd);
     //emit confirmation to dashboard
     io.sockets.emit("liveStream",global.url+":8080/?action=stream");
@@ -117,6 +174,6 @@ function getPosition(string, subString, index) {
    return string.split(subString, index).join(subString).length;
 }
 
-http.listen(config.web_port, function () {
-  console.log('Listening on port: '+config.web_port)
+http.listen(www_port, function () {
+  console.log('Listening on port: '+ www_port)
 })

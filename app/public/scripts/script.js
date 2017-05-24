@@ -1,5 +1,18 @@
 var socket = io();
 
+socket.on('lightStatus', function(data) {
+  if (data=="on") {
+    $("#lights").css("background","yellow");
+     $("#lights").css("color","#666666");
+     $("#lights").css("border-style","solid");
+  } else {
+    $("#lights").css("background","#666666");
+     $("#lights").css("color","white");
+     $("#lights").css("border-style","none");
+  }
+  
+});
+
 socket.on('news', function (data) {
 	alert (data.width+"x"+data.height)
 });
@@ -23,10 +36,6 @@ function sendCommand(c,x) {
     x=Math.round(x*50);
     document.getElementById("rotate_out").innerHTML = "Rotate: "+x;
   }
-  if (c=="l") {
-    //x=Math.round(x*50);
-    document.getElementById("light_out").innerHTML = "Lights: "+x;
-  }
   socket.emit(c,x);
   
 }
@@ -34,9 +43,13 @@ function sendCommand(c,x) {
 window.addEventListener("load", function(){
   var StartStreamButton = document.getElementById('StartStreamButton');
   var StopButton = document.getElementById('StopButton');
+  var LightButton = document.getElementById('lights');
   StopButton.addEventListener('click', function() {
     document.getElementById('thrust').value=50;
     sendCommand('t',50); 
+  });
+  LightButton.addEventListener('click', function() {
+    sendCommand('l','toggle'); 
   });
   
   StartStreamButton.addEventListener('click', function() {

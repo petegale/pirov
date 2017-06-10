@@ -28,14 +28,14 @@ if (isPi()) {
 
 function safeServoWrite(gpio,val) {
   //safely handle servo values from -50 to +50
-  var logOut = "in ="+val;
+  var logOut = "in ="+val+" to "+gpio;
   val=val+50;
   if (val>100) {
     val=100;
   }
   val=(val*((servoMax-servoMin)/100))+servoMin;
   if (serverStatus == "live") {
-    console.log(logOut+"Live out "+val);
+    console.log(logOut+" Live out "+val);
     gpio.servoWrite(val);
   } else {
     console.log(logOut+"Sim out "+val);
@@ -68,11 +68,11 @@ mixer.mix = function() {
   }
   
   //send mixed signal to motors
-  console.log("send up");
+  //console.log("send up");
   safeServoWrite(svUp,mixer.VOut);
-  console.log("send Left");
+  //console.log("send Left");
   safeServoWrite(svLeft,mixer.LOut);
-  console.log("send right");
+  //console.log("send right");
   safeServoWrite(svRight,mixer.ROut);
 }
 

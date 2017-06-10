@@ -10,6 +10,7 @@ echo "installing pirov"
 npm install
 cd ..
 echo "indeed.."
+cd pirov
 npm start
 
 

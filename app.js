@@ -116,7 +116,7 @@ io.on('connection', function(socket){
     } else {
       //Lights are off so turn them on
       lightStatus =  "on";
-      safeServoWrite(svLED,50);
+      safeServoWrite(svLED,45);
     }
     console.log("lights: "+lightStatus);
     //emit confirmation to dashboard
@@ -154,7 +154,7 @@ function startStreaming(io,data) {
   } else {
     //var s_path=__dirname+"/app/mjpg-streamer/";
     var s_path="/home/pi/mjpg-streamer/";
-    var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www --port 8080\" -i \""+s_path+"input_raspicam.so -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
+    var streamCmd=s_path+"mjpg_streamer -o \""+s_path+"output_http.so -w ./www --port 8080\" -i \""+s_path+"input_raspicam.so rot "+config.img_rotation+" -x "+data.width+" -y "+data.height+" -fps "+config.stream_fps+"\""; 
     if (isPi()) {
       proc = exec(streamCmd, function(err, stdout, stderr) {
         if (err) throw err;

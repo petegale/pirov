@@ -2,6 +2,7 @@
   "web_url":"rov.local",
   "prod_port":"80",
   "dev_port":"3000",
+  "img_rotation":"90",
   "stream_file" : "./public/stream/image_stream.jpg",
   "stream_fps" : 8,
   "svUp":23,

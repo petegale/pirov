@@ -112,11 +112,11 @@ io.on('connection', function(socket){
     if (lightStatus=="on") {
       //Lights are already on, turn off
       lightStatus = "off";
-      safeServoWrite(svLED,servoMin);
+      safeServoWrite(svLED,0);
     } else {
       //Lights are off so turn them on
       lightStatus =  "on";
-      safeServoWrite(svLED,servoMax);
+      safeServoWrite(svLED,50);
     }
     console.log("lights: "+lightStatus);
     //emit confirmation to dashboard

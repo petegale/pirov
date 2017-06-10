@@ -4,9 +4,9 @@
   "dev_port":"3000",
   "stream_file" : "./public/stream/image_stream.jpg",
   "stream_fps" : 8,
-  "svUp":21,
+  "svUp":23,
   "svL":24,
   "svR":25,
-  "svLED":23,
+  "svLED":21,
   "foo":"bar"
 }

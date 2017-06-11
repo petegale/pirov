@@ -26,16 +26,17 @@ if (isPi()) {
   console.log("Servo control is SIMULATED");
 }
 
-function safeServoWrite(gpio,val) {
+function safeServoWrite(sName,gpio,val) {
   //safely handle servo values from -50 to +50
-  var logOut = "input="+val;
+  console.log("ssw passed:" + val.type);
+  var logOut = sName  +" in:"+val;
   val=val+50;
   if (val>100) {
     val=100;
   }
   val=(val*((servoMax-servoMin)/100))+servoMin;
   if (serverStatus == "live") {
-    console.log(logOut+" Live out "+val+" to "+ gpio.gpio);
+    console.log(logOut+" out:"+val+" to "+ gpio.gpio);
     gpio.servoWrite(val);
   } else {
     console.log(logOut+"Sim out "+val);
@@ -77,12 +78,12 @@ mixer.mix = function() {
   
   //send mixed signal to motors
   //console.log("send up");
-  safeServoWrite(motorUp,mixer.VOut);
+  safeServoWrite("up",motorUp,mixer.VOut);
   //console.log("send Left");
-  safeServoWrite(motorLeft,mixer.LOut);
+  safeServoWrite("left",motorLeft,mixer.LOut);
   //console.log("send right");
-  safeServoWrite(motorRight,mixer.ROut);
-  safeServoWrite(LED,mixer.LedOut);
+  safeServoWrite("right",motorRight,mixer.ROut);
+  safeServoWrite("led",LED,mixer.LedOut);
 }
 
 
@@ -117,6 +118,7 @@ io.on('connection', function(socket){
   socket.on('start-stream', function(data) {
     startStreaming(io,data);
   });
+  
   socket.on('l', function(x) {
     //come on @ 1600 / off @1560
     if (lightStatus=="on") {

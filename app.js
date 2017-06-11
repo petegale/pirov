@@ -28,7 +28,7 @@ if (isPi()) {
 
 function safeServoWrite(sName,gpio,val) {
   //safely handle servo values from -50 to +50
-  console.log("ssw passed:" + val.type);
+  console.log(typeof val);
   var logOut = sName  +" in:"+val;
   val=val+50;
   if (val>100) {

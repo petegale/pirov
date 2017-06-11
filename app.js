@@ -56,9 +56,9 @@ mixer.LedOut=0;
 mixer.mix = function() {
   //do the lights first
   if (mixer.LedIn) {
-    mixer.LedOut=0;
-  } else {
     mixer.LedOut=50;
+  } else {
+    mixer.LedOut=0;
   }
   //up and down are independent so just pass through
   mixer.VOut=mixer.yIn;

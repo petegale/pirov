@@ -16,11 +16,12 @@ var serverStatus="dev";
 if (isPi()) {
   www_port = config.prod_port;
   var Gpio = require('pigpio').Gpio;
-  var svUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
-  var svLED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
-  var svLeft = new Gpio(config.svL, {mode: Gpio.OUTPUT});
-  var svRight = new Gpio(config.svR, {mode: Gpio.OUTPUT});
+  var motorUp = new Gpio(config.svUp, {mode: Gpio.OUTPUT});
+  var LED = new Gpio(config.svLED, {mode: Gpio.OUTPUT});
+  var motorLeft = new Gpio(config.svL, {mode: Gpio.OUTPUT});
+  var motorRight = new Gpio(config.svR, {mode: Gpio.OUTPUT});
   console.log("Servo control is LIVE");
+  console.log(LED);
   serverStatus = "live";
 } else {
   console.log("Servo control is SIMULATED");
@@ -28,7 +29,7 @@ if (isPi()) {
 
 function safeServoWrite(gpio,val) {
   //safely handle servo values from -50 to +50
-  var logOut = "in ="+val+" to "+gpio;
+  var logOut = "in ="+val;
   val=val+50;
   if (val>100) {
     val=100;
@@ -69,11 +70,11 @@ mixer.mix = function() {
   
   //send mixed signal to motors
   //console.log("send up");
-  safeServoWrite(svUp,mixer.VOut);
+  safeServoWrite(motorUp,mixer.VOut);
   //console.log("send Left");
-  safeServoWrite(svLeft,mixer.LOut);
+  safeServoWrite(motorLeft,mixer.LOut);
   //console.log("send right");
-  safeServoWrite(svRight,mixer.ROut);
+  safeServoWrite(motorRight,mixer.ROut);
 }
 
 
@@ -112,11 +113,11 @@ io.on('connection', function(socket){
     if (lightStatus=="on") {
       //Lights are already on, turn off
       lightStatus = "off";
-      safeServoWrite(svLED,0);
+      safeServoWrite(LED,0);
     } else {
       //Lights are off so turn them on
       lightStatus =  "on";
-      safeServoWrite(svLED,50);
+      safeServoWrite(LED,50);
     }
     console.log("lights: "+lightStatus);
     //emit confirmation to dashboard

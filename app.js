@@ -46,12 +46,20 @@ var mixer = {};
 mixer.xIn=0;
 mixer.yIn=0;
 mixer.tIn=0;
+mixer.LedIn=false;
 
 mixer.VOut=0;
 mixer.LOut=0;
 mixer.ROut=0;
+mixer.LedOut=0;
 
 mixer.mix = function() {
+  //do the lights first
+  if (mixer.LedIn) {
+    mixer.LedOut=0;
+  } else {
+    mixer.LedOut=50;
+  }
   //up and down are independent so just pass through
   mixer.VOut=mixer.yIn;
   //tIn = thrust, so pass this to both left and right
@@ -74,6 +82,7 @@ mixer.mix = function() {
   safeServoWrite(motorLeft,mixer.LOut);
   //console.log("send right");
   safeServoWrite(motorRight,mixer.ROut);
+  safeServoWrite(LED,mixer.LedOut);
 }
 
 
@@ -109,19 +118,27 @@ io.on('connection', function(socket){
     startStreaming(io,data);
   });
   socket.on('l', function(x) {
+    //come on @ 1600 / off @1560
     if (lightStatus=="on") {
       //Lights are already on, turn off
       lightStatus = "off";
+      mixer.LedIn = false;
+      /*
       for (i=11;i>0;i--) {
         safeServoWrite(LED,(i-1)*5);
       }
+      */
     } else {
       //Lights are off so turn them on
       lightStatus =  "on";
+      mixer.LedIn = true;
+      /*
       for (i=0;i<10;i++) {
         safeServoWrite(LED,(i+1)*5);
       }
+      */
     }
+    mixer.mix();
     console.log("lights: "+lightStatus);
     //emit confirmation to dashboard
     io.sockets.emit("lightStatus",lightStatus);

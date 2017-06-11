@@ -32,9 +32,10 @@ socket.on('liveStream', function(Stream_url) {
       },
       success: function()
       {
-          alert("file exists")
-          var stream = document.getElementById('stream');
-          stream.src=Stream_url;
+        alert("file exists")
+        $("#StartStreamButton").classList.add('button_on');
+        var stream = document.getElementById('stream');
+        stream.src=Stream_url;
       }
   });
   //alert(url)

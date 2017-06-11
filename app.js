@@ -12,6 +12,7 @@ var isPi = require('detect-rpi');
 var www_port=config.dev_port;
 var lightStatus=false;
 var serverStatus="dev";
+var logging=false;
 
 if (isPi()) {
   www_port = config.prod_port;
@@ -28,7 +29,6 @@ if (isPi()) {
 
 function safeServoWrite(sName,gpio,val) {
   //safely handle servo values from -50 to +50
-  console.log(typeof val);
   var logOut = sName  +" in:"+val;
   val=val+50;
   if (val>100) {
@@ -36,10 +36,16 @@ function safeServoWrite(sName,gpio,val) {
   }
   val=(val*((servoMax-servoMin)/100))+servoMin;
   if (serverStatus == "live") {
-    console.log(logOut+" out:"+val+" to "+ gpio.gpio);
+    console_log(logOut+" out:"+val+" to "+ gpio.gpio);
     gpio.servoWrite(val);
   } else {
-    console.log(logOut+"Sim out "+val);
+    console_log(logOut+"Sim out "+val);
+  }
+}
+
+function console_log(output) {
+  if (logging) {
+    console.log(output);
   }
 }
 
@@ -77,11 +83,11 @@ mixer.mix = function() {
   }
   
   //send mixed signal to motors
-  //console.log("send up");
+  //console_log("send up");
   safeServoWrite("up",motorUp,mixer.VOut);
-  //console.log("send Left");
+  //console_log("send Left");
   safeServoWrite("left",motorLeft,mixer.LOut);
-  //console.log("send right");
+  //console_log("send right");
   safeServoWrite("right",motorRight,mixer.ROut);
   safeServoWrite("led",LED,mixer.LedOut);
 }
@@ -109,39 +115,40 @@ app.get('/', function (req, res) {
 io.on('connection', function(socket){
   global.url=socket.handshake.headers.referer;
   global.url = global.url.substring(0, global.url.length - 1);
-  console.log("Dashboard connected to: "+global.url);
+  console_log("Dashboard connected to: "+global.url);
   
   socket.on('disconnect', function(){
-    console.log("Dashboard disconnected")
+    console_log("Dashboard disconnected")
   });
   
   socket.on('start-stream', function(data) {
     startStreaming(io,data);
   });
   
-  socket.on('l', function(x) {
+  socket.on('log', function(x) {
+    if (logging) {
+      //logging on, turn off
+      logging = false;
+    } else {
+      //Logging off so turn on
+      logging = true;
+    }
+    io.sockets.emit("logging",logging);
+  });
+  
+  socket.on('lights', function(x) {
     //come on @ 1600 / off @1560
     if (lightStatus=="on") {
       //Lights are already on, turn off
       lightStatus = "off";
       mixer.LedIn = false;
-      /*
-      for (i=11;i>0;i--) {
-        safeServoWrite(LED,(i-1)*5);
-      }
-      */
     } else {
       //Lights are off so turn them on
       lightStatus =  "on";
       mixer.LedIn = true;
-      /*
-      for (i=0;i<10;i++) {
-        safeServoWrite(LED,(i+1)*5);
-      }
-      */
     }
     mixer.mix();
-    console.log("lights: "+lightStatus);
+    console_log("lights: "+lightStatus);
     //emit confirmation to dashboard
     io.sockets.emit("lightStatus",lightStatus);
     
@@ -170,7 +177,7 @@ function stopStreaming() {
 }
  
 function startStreaming(io,data) {
-  console.log("start stream "+data.height+"x"+data.width)
+  console_log("start stream "+data.height+"x"+data.width)
   if (global.streaming) {
     //emit confirmation to dashboard
     io.sockets.emit("liveStream",global.url+":8080/?action=stream");
@@ -183,11 +190,11 @@ function startStreaming(io,data) {
         if (err) throw err;
       });
       global.sPid=proc.pid;
-      console.log("PID="+global.sPid);
+      console_log("PID="+global.sPid);
     }
     global.streaming=true;
     
-    console.log(streamCmd);
+    console_log(streamCmd);
     //emit confirmation to dashboard
     io.sockets.emit("liveStream",global.url+":8080/?action=stream");
   }

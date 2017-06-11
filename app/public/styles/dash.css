@@ -44,3 +44,13 @@ button{
 button:hover{
   background-color: #333333;
 }
+.button_on {
+  background:yellow;
+  color:#666666
+  border-style:solid;
+}
+.button_off {
+  background:yellow;
+  color:#666666
+  border-style:solid;
+}

@@ -2,13 +2,9 @@ var socket = io();
 
 socket.on('lightStatus', function(data) {
   if (data=="on") {
-    $("#lights").css("background","yellow");
-     $("#lights").css("color","#666666");
-     $("#lights").css("border-style","solid");
+    $("#lights").classList.add('button_on');
   } else {
-    $("#lights").css("background","#666666");
-     $("#lights").css("color","white");
-     $("#lights").css("border-style","none");
+    $("#lights").classList.remove('button_on');
   }
   
 });
@@ -16,6 +12,15 @@ socket.on('lightStatus', function(data) {
 socket.on('news', function (data) {
 	alert (data.width+"x"+data.height)
 });
+
+socket.on('logging', function (data) {
+  if (data=="true") {
+    $("#logging").classList.add('button_on');
+  } else {
+    $("#logging").classList.remove('button_on');
+  }
+});
+
 
 socket.on('liveStream', function(Stream_url) {
   $.ajax({
@@ -56,12 +61,16 @@ window.addEventListener("load", function(){
   var StartStreamButton = document.getElementById('StartStreamButton');
   var StopButton = document.getElementById('StopButton');
   var LightButton = document.getElementById('lights');
+  var LogButton = document.getElementById('logging');
   StopButton.addEventListener('click', function() {
     document.getElementById('thrust').value=50;
     sendCommand('t',50); 
   });
   LightButton.addEventListener('click', function() {
-    sendCommand('l','toggle'); 
+    sendCommand('lights','toggle'); 
+  });
+  LogButton.addEventListener('click', function() {
+    sendCommand('log','toggle'); 
   });
   
   StartStreamButton.addEventListener('click', function() {

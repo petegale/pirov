@@ -30,7 +30,6 @@ socket.on('liveStream', function(Stream_url) {
   var stream = document.getElementById('stream');
   setTimeout(function(){ stream.src=Stream_url; }, 1000);
   });
-});
 
 function sendCommand(c,x) {
   if (c=="t") {

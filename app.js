@@ -57,7 +57,7 @@ mixer.LedOut=0;
 mixer.mix = function() {
   //do the lights first
   if (mixer.LedIn) {
-    mixer.LedOut=50;
+    mixer.LedOut=8;
   } else {
     mixer.LedOut=0;
   }

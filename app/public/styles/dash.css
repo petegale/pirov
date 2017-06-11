@@ -57,7 +57,9 @@
   font-size: 16px;
   border-style:solid;
 }
-button:hover{
+.button_off:hover{
   background-color: #333333;
 }
-
+.button_on:hover{
+  background-color: #FF8000;
+}

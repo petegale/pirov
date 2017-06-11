@@ -13,8 +13,8 @@ socket.on('news', function (data) {
 	alert (data.width+"x"+data.height)
 });
 
-socket.on('logging', function (data) {
-  if (data=="true") {
+socket.on('log', function (data) {
+  if (data=="on") {
     //logging has been turned on
     document.getElementById("logging").className = "button_on";
     document.getElementById("control_data").style.display="block";

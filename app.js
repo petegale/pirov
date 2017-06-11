@@ -129,11 +129,14 @@ io.on('connection', function(socket){
     if (logging) {
       //logging on, turn off
       logging = false;
+      console.log("logging off")
+      io.sockets.emit("log","off");
     } else {
       //Logging off so turn on
       logging = true;
+      console.log("logging on")
+      io.sockets.emit("log","on");
     }
-    io.sockets.emit("logging",logging);
   });
   
   socket.on('lights', function(x) {

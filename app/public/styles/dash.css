@@ -4,6 +4,10 @@
   position: relative;
 }
 
+#control_data {
+  display:none;
+}
+
 .stream-container {
   height: 0;
   padding-bottom: 42.86%; /* 16:9 */

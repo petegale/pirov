@@ -15,30 +15,21 @@ socket.on('news', function (data) {
 
 socket.on('logging', function (data) {
   if (data=="true") {
-    $("#logging").classList.add('button_on');
+    //logging has been turned on
+    document.getElementById("logging").classList.add('button_on');
+    document.getElementById("control_data").style.display="block";
   } else {
-    $("#logging").classList.remove('button_on');
+    document.getElementById("logging").classList.remove('button_on');
+    document.getElementById("control_data").style.display="none";
   }
 });
 
 
 socket.on('liveStream', function(Stream_url) {
-  $.ajax({
-      url:Stream_url,
-      type:'HEAD',
-      error: function()
-      {
-          alert("no file yet")
-      },
-      success: function()
-      {
-        alert("file exists")
-        $("#StartStreamButton").classList.add('button_on');
-        var stream = document.getElementById('stream');
-        stream.src=Stream_url;
-      }
+  document.getElementById("StartStreamButton").classList.add('button_on');
+  var stream = document.getElementById('stream');
+  setTimeout(function(){ stream.src=Stream_url; }, 1000);
   });
-  //alert(url)
 });
 
 function sendCommand(c,x) {

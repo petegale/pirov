@@ -34,7 +34,7 @@
   width:100px;
    transform: rotate(270deg);
 }
-button{
+.button_off{
   margin: 8px;
   border-radius: 4px;
   background-color: #666666;
@@ -45,16 +45,19 @@ button{
   display: inline-block;
   font-size: 16px;
 }
+.button_on{
+  margin: 8px;
+  border-radius: 4px;
+  background:yellow;
+  border: none;
+  color:#666666;
+  padding: 2px 16px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-style:solid;
+}
 button:hover{
   background-color: #333333;
 }
-.button_on {
-  background:yellow;
-  color:#666666
-  border-style:solid;
-}
-.button_off {
-  background:yellow;
-  color:#666666
-  border-style:solid;
-}
+

@@ -2,9 +2,9 @@ var socket = io();
 
 socket.on('lightStatus', function(data) {
   if (data=="on") {
-    $("#lights").classList.add('button_on');
+    document.getElementById("lights").className = "button_on";
   } else {
-    $("#lights").classList.remove('button_on');
+    document.getElementById("lights").className = "button_off";
   }
   
 });
@@ -16,20 +16,20 @@ socket.on('news', function (data) {
 socket.on('logging', function (data) {
   if (data=="true") {
     //logging has been turned on
-    document.getElementById("logging").classList.add('button_on');
+    document.getElementById("logging").className = "button_on";
     document.getElementById("control_data").style.display="block";
   } else {
-    document.getElementById("logging").classList.remove('button_on');
+    document.getElementById("logging").className = "button_off";
     document.getElementById("control_data").style.display="none";
   }
 });
 
 
 socket.on('liveStream', function(Stream_url) {
-  document.getElementById("StartStreamButton").classList.add('button_on');
+  document.getElementById("StartStreamButton").className = "button_on";
   var stream = document.getElementById('stream');
   setTimeout(function(){ stream.src=Stream_url; }, 1000);
-  });
+});
 
 function sendCommand(c,x) {
   if (c=="t") {

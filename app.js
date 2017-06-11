@@ -21,7 +21,6 @@ if (isPi()) {
   var motorLeft = new Gpio(config.svL, {mode: Gpio.OUTPUT});
   var motorRight = new Gpio(config.svR, {mode: Gpio.OUTPUT});
   console.log("Servo control is LIVE");
-  console.log(LED);
   serverStatus = "live";
 } else {
   console.log("Servo control is SIMULATED");
@@ -29,14 +28,14 @@ if (isPi()) {
 
 function safeServoWrite(gpio,val) {
   //safely handle servo values from -50 to +50
-  var logOut = "in ="+val;
+  var logOut = "input="+val;
   val=val+50;
   if (val>100) {
     val=100;
   }
   val=(val*((servoMax-servoMin)/100))+servoMin;
   if (serverStatus == "live") {
-    console.log(logOut+" Live out "+val);
+    console.log(logOut+" Live out "+val+" to "+ gpio.gpio);
     gpio.servoWrite(val);
   } else {
     console.log(logOut+"Sim out "+val);
@@ -113,11 +112,15 @@ io.on('connection', function(socket){
     if (lightStatus=="on") {
       //Lights are already on, turn off
       lightStatus = "off";
-      safeServoWrite(LED,0);
+      for (i=11;i>0;i--) {
+        safeServoWrite(LED,(i-1)*5);
+      }
     } else {
       //Lights are off so turn them on
       lightStatus =  "on";
-      safeServoWrite(LED,50);
+      for (i=0;i<10;i++) {
+        safeServoWrite(LED,(i+1)*5);
+      }
     }
     console.log("lights: "+lightStatus);
     //emit confirmation to dashboard

@@ -17,9 +17,21 @@ socket.on('news', function (data) {
 	alert (data.width+"x"+data.height)
 });
 
-socket.on('liveStream', function(url) {
-  var stream = document.getElementById('stream');
-  stream.src=url;
+socket.on('liveStream', function(Stream_url) {
+  $.ajax({
+      url:Stream_url,
+      type:'HEAD',
+      error: function()
+      {
+          alert("no file yet")
+      },
+      success: function()
+      {
+          alert("file exists")
+          var stream = document.getElementById('stream');
+          stream.src=Stream_url;
+      }
+  });
   //alert(url)
 });
 

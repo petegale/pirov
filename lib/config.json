@@ -8,14 +8,5 @@
   "svUp":23,
   "svL":24,
   "svR":25,
-  "svLED":21,
-  "key_up":"w",
-  "key_down":"s",
-  "key_left":"n",
-  "key_right":"m",
-  "key_fast":"tab",
-  "key_slow":"cmd",
-  "key_light":"l",
-  "key_log":"k",
-  "key_video":"v"
+  "svLED":21
 }

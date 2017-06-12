@@ -13,15 +13,15 @@
  <script type="text/javascript" src="/scripts/mousetrap.min.js"></script>
 
 <script type="text/javascript">
-  Mousetrap.bind('<%= config.key_up %>', function() { key("up"); }, 'keydown');
-  Mousetrap.bind('<%= config.key_down %>', function() { key("down"); }, 'keydown');
-  Mousetrap.bind('<%= config.fast %>', function() { key("faster"); }, 'keydown');
-  Mousetrap.bind('<%= config.slow %>', function() { key("slower"); }, 'keydown');
-  Mousetrap.bind('<%= config.key_left %>', function() { key("left"); }, 'keydown');
-  Mousetrap.bind('<%= config.key_right %>', function() { key("right"); }, 'keydown'); 
-  Mousetrap.bind('<%= config.key_light %>', function() { key("lights"); }, 'keydown'); 
-  Mousetrap.bind('<%= config.key_video %>', function() { key("video"); }, 'keydown'); 
-  Mousetrap.bind('<%= config.key_log %>', function() { key("logging"); }, 'keydown'); 
+  Mousetrap.bind('w', function() { key("up"); }, 'keydown');
+  Mousetrap.bind('s', function() { key("down"); }, 'keydown');
+  Mousetrap.bind('tab', function() { key("faster"); }, 'keydown');
+  Mousetrap.bind('cmd', function() { key("slower"); }, 'keydown');
+  Mousetrap.bind('n', function() { key("left"); }, 'keydown');
+  Mousetrap.bind('m', function() { key("right"); }, 'keydown'); 
+  Mousetrap.bind('l', function() { key("lights"); }, 'keydown'); 
+  Mousetrap.bind('v', function() { key("video"); }, 'keydown'); 
+  Mousetrap.bind('g', function() { key("logging"); }, 'keydown'); 
 </script>
   
 <body>

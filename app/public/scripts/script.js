@@ -150,12 +150,12 @@ window.addEventListener("load", function(){
   joystickView.bind("verticalMove", function(y){
       $("#yVal").html(y);
       //Call Socket.io function to emit vertical move y
-      sendCommand("v",Math.round(y*50);
+      sendCommand("v",Math.round(y*50));
   });
   joystickView.bind("horizontalMove", function(x){
       $("#xVal").html(x);
       //Call Socket.io function to emit horizontal move x
-      sendCommand("r",Math.round(x*50);
+      sendCommand("r",Math.round(x*50));
   });
   
   

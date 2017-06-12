@@ -8,6 +8,12 @@ function inrange(x) {
   }
 }
 
+function start_stream() {
+  var sW = document.getElementById("streamcontainer").offsetWidth
+  var sH = document.getElementById("streamcontainer").offsetHeight
+  socket.emit('start-stream', { width : sW, height : sH });
+}
+
 function key(x) {
   var command="";
   var value=0;
@@ -15,6 +21,7 @@ function key(x) {
       case "up":
         if (inrange(control.x)) {
           control.x += control_increment;
+          console.log("increment x");
         }
         command="v";
         value=control.x;
@@ -131,12 +138,6 @@ window.addEventListener("load", function(){
   LogButton.addEventListener('click', function() {
     sendCommand('log','toggle'); 
   });
-  
-  function start_stream() {
-    var sW = document.getElementById("streamcontainer").offsetWidth
-    var sH = document.getElementById("streamcontainer").offsetHeight
-    socket.emit('start-stream', { width : sW, height : sH });
-  }
   
   StartStreamButton.addEventListener('click', function() {
     start_stream();

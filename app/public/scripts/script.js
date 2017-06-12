@@ -3,7 +3,7 @@ var control = {x:0, y:0, z:0,};
 var control_increment = 10;
 
 function inrange(x) {
-  if (x > -51 && x > 51) {
+  if (x > -51 && x < 51) {
     return true;
   }
 }

@@ -6,9 +6,17 @@ function start_stream() {
   var sH = document.getElementById("streamcontainer").offsetHeight
   socket.emit('start-stream', { width : sW, height : sH });
 }
-function controlInRange(x) {
-  if (x > -50 && x < 50) {
-    return true;
+function limit(x) {
+  switch(true) {
+  case (x < -50):
+    return -50;
+    break;
+  case (x > 50):
+    return 50;
+    break;
+  default:
+    return x;
+    break;
   }
 }
 
@@ -17,23 +25,20 @@ function key(axis,val) {
   var value=0;
   switch(axis) {
     case "x":
-      if (controlInRange(control.x)) {
-        control.x = control.x + val;
-      }
+      control.x = control.x + val;
+      control.x = limit(control.x);
       sendCommand("x",control.x );
     break;
     
     case "y":
-      if (controlInRange(control.y)) {
-        control.y = control.y + val;
-      }
+      control.y = control.y + val;
+      control.y = limit(control.y);
       sendCommand("y",control.y );
     break;
         
     case "z":
-      if (controlInRange(control.z)) {
-        control.z = control.z + val;
-      }
+      control.z = control.z + val;
+      control.z = limit(control.z);
       sendCommand("z",control.z );
     break;        
   

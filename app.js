@@ -52,7 +52,7 @@ function console_log(output) {
 var mixer = {};
 mixer.xIn=0;
 mixer.yIn=0;
-mixer.tIn=0;
+mixer.zIn=0;
 mixer.LedIn=false;
 
 mixer.VOut=0;
@@ -157,17 +157,17 @@ io.on('connection', function(socket){
     
   });
   
-  socket.on('t', function(x) {
-    mixer.tIn=x;
+  socket.on('z', function(x) {
+    mixer.zIn=x;
     mixer.mix();
   });
   
-  socket.on('v', function(x) {
+  socket.on('y', function(x) {
     mixer.yIn=x;
     mixer.mix();
   });
   
-  socket.on('r', function(x) {
+  socket.on('x', function(x) {
     mixer.xIn=x;
     mixer.mix();
   });

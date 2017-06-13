@@ -1,78 +1,53 @@
 var socket = io();
 var control = {x:0, y:0, z:0,};
-var control_increment = 10;
-
-function inrange(x) {
-  if (x > -51 && x < 51) {
-    return true;
-  }
-}
 
 function start_stream() {
   var sW = document.getElementById("streamcontainer").offsetWidth
   var sH = document.getElementById("streamcontainer").offsetHeight
   socket.emit('start-stream', { width : sW, height : sH });
 }
+function controlInRange(x) {
+  if (x > -50 && x < 50) {
+    return true;
+  }
+}
 
-function key(x) {
+function key(axis,val) {
   var command="";
   var value=0;
-  switch(x) {
-      case "up":
-        if (inrange(control.x)) {
-          control.x += control_increment;
-          console.log("increment x");
-        }
-        command="v";
-        value=control.x;
-        break;
-      case "down":
-        if (inrange(control.x)) {
-          control.x -= control_increment;
-        }
-        command="v";
-        value=control.x;
-        break;
-      case "left":
-        if (inrange(control.y)) {
-          control.y -= control_increment;
-        }
-        command="r";
-        value=control.y;
-        break;
-      case "right":
-        if (inrange(control.y)) {
-          control.y += control_increment;
-        }
-        command="r";
-        value=control.y;
-        break;
-      case "fast":
-        if (inrange(control.z)) {
-          control.z += control_increment;
-        }
-        command="t";
-        value=control.z;
-        break;
-      case "slow":
-        if (inrange(control.z)) {
-          control.z -= control_increment;
-        }
-        command="t";
-        value=control.z;
-        break;
-      case "video":
-        start_stream();
-        break;
-      case "lights":
-        sendCommand('lights','toggle'); 
-        break;
-      case "logging":
-        sendCommand('log','toggle'); 
-        break;
-  }
-  if  (command!="") {
-    sendCommand(command,value);
+  switch(axis) {
+    case "x":
+      if (controlInRange(control.x)) {
+        control.x = control.x + val;
+      }
+      sendCommand("x",control.x );
+    break;
+    
+    case "y":
+      if (controlInRange(control.y)) {
+        control.y = control.y + val;
+      }
+      sendCommand("y",control.y );
+    break;
+        
+    case "z":
+      if (controlInRange(control.z)) {
+        control.z = control.z + val;
+      }
+      sendCommand("z",control.z );
+    break;        
+  
+    case "video":
+      start_stream();
+    break;
+  
+    case "lights":
+      sendCommand('lights','toggle'); 
+    break;
+  
+    case "logging":
+      sendCommand('log','toggle'); 
+    break;
   }
 }
 

@@ -13,12 +13,15 @@
  <script type="text/javascript" src="/scripts/mousetrap.min.js"></script>
 
 <script type="text/javascript">
-  Mousetrap.bind('w', function() { key("up"); }, 'keydown');
-  Mousetrap.bind('s', function() { key("down"); }, 'keydown');
-  Mousetrap.bind('tab', function() { key("faster"); }, 'keydown');
-  Mousetrap.bind('cmd', function() { key("slower"); }, 'keydown');
-  Mousetrap.bind('n', function() { key("left"); }, 'keydown');
-  Mousetrap.bind('m', function() { key("right"); }, 'keydown'); 
+  //key mapping for keyboard control
+  //adjust for control increments within +50/-50 range
+  var control_increment = 5;
+  Mousetrap.bind('w', function() { key("y",control_increment; }, 'keydown');
+  Mousetrap.bind('s', function() { key("y",0-control_increment); }, 'keydown');
+  Mousetrap.bind('tab', function() { key("z",control_increment); }, 'keydown');
+  Mousetrap.bind('cmd', function() { key("z",0-control_increment); }, 'keydown');
+  Mousetrap.bind('m', function() { key("x",control_increment); }, 'keydown'); 
+  Mousetrap.bind('n', function() { key("x",0-control_increment); }, 'keydown');
   Mousetrap.bind('l', function() { key("lights"); }, 'keydown'); 
   Mousetrap.bind('v', function() { key("video"); }, 'keydown'); 
   Mousetrap.bind('g', function() { key("logging"); }, 'keydown'); 

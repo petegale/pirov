@@ -70,11 +70,11 @@ mixer.mix = function() {
   //up and down are independent so just pass through
   mixer.VOut=mixer.yIn;
   //tIn = thrust, so pass this to both left and right
-  mixer.ROut = mixer.tIn;
-  mixer.LOut = mixer.tIn;
+  mixer.ROut = mixer.zIn;
+  mixer.LOut = mixer.zIn;
 
   //now modify this for cases of rotation via xIn
-  if (mixer.tIn>0) {
+  if (mixer.zIn>0) {
     //going forward
     mixer.LOut=mixer.LOut+mixer.xIn;
     mixer.ROut=mixer.ROut-mixer.xIn;

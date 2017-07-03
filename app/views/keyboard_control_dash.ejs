@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ROV Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="/styles/dash.css">
+</head>
+ <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+ <script type="text/javascript" src="/scripts/script.js"></script>
+ <script type="text/javascript" src="/scripts/jquery-1.11.2.min.js"></script>
+ <script type="text/javascript" src="/scripts/underscore-min.js"></script>
+ <script type="text/javascript" src="/scripts/backbone-min.js"></script>
+ <script type="text/javascript" src="/scripts/mousetrap.min.js"></script>
+
+<script type="text/javascript">
+  //key mapping for keyboard control
+  //adjust for control increments within +50/-50 range
+  var control_increment = 5;
+  Mousetrap.bind('w', function() { key("y",control_increment); }, 'keydown');
+  Mousetrap.bind('s', function() { key("y",0-control_increment); }, 'keydown');
+  Mousetrap.bind('q', function() { key("z",control_increment); }, 'keydown');
+  Mousetrap.bind('z', function() { key("z",0-control_increment); }, 'keydown');
+  Mousetrap.bind('m', function() { key("x",control_increment); }, 'keydown'); 
+  Mousetrap.bind('n', function() { key("x",0-control_increment); }, 'keydown');
+  Mousetrap.bind('l', function() { key("lights"); }, 'keydown'); 
+  Mousetrap.bind('v', function() { key("video"); }, 'keydown'); 
+  Mousetrap.bind('g', function() { key("logging"); }, 'keydown');
+</script>
+  
+<body>
+<div class="stream-parent">
+  <div class="stream-container" id="streamcontainer">
+    <img src="" id="stream">
+  </div>
+</div>
+  <div id="joystickContent" class="controller">
+    <canvas id="control1" width="200" height="200>" style="width: 200px; height: 200px;" style="background:0,255,0,1"></canvas>
+  </div>
+  <div id="switches" class="controller_M">
+    <button id="StartStreamButton" type="button" class="button_off">
+          Start live video
+      </button><br>
+      <div id="control_data">
+        <span id="thrust_out">Thrust: 0</span><br>
+        <span id="vert_out">Vertical: 0</span><br>
+        <span id="rotate_out">Rotate: 0</span><br>
+      </div>
+      
+      <button id="lights" type="button" class="button_off">
+            Lights
+        </button><br>
+        <button id="logging" type="button" class="button_off">
+              Log to console
+          </button>
+  </div>
+  <div id="thruster" class="controller">
+      <canvas id="control2" width="20" height="200>" style="width: 20px; height: 200px;" style="background:0,255,0,1"></canvas>
+    <button id="StopButton" class="button_off">Stop</button>
+  </div>
+
+  <script type="text/javascript">
+  </script>
+</body>
+</html>

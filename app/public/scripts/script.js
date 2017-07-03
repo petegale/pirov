@@ -6,6 +6,57 @@ function start_stream() {
   var sH = document.getElementById("streamcontainer").offsetHeight
   socket.emit('start-stream', { width : sW, height : sH });
 }
+
+//setup for canvas horizon
+function draw(x,y,z) {
+  var canvas1 = document.getElementById('control1');
+  var canvas2 = document.getElementById('control2');
+  if (canvas1.getContext) {
+    var ctx1 = canvas1.getContext('2d');
+  }
+  if (canvas2.getContext) {
+    var ctx2 = canvas2.getContext('2d');
+  }
+  ctx1.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx1.fillStyle = 'rgba(0, 0, 200, 0.5)';
+  ctx1.clearRect(0, 0, 200, 200); // clear canvas
+  
+  ctx1.beginPath();
+  ctx1.moveTo(0, 0);
+  ctx1.lineTo(200,0);
+  ctx1.lineTo(200,200);
+  ctx1.lineTo(0,200);
+  ctx1.lineTo(0,0);
+  ctx1.moveTo(100,0);
+  ctx1.lineTo(100,200);
+  ctx1.moveTo(0,100);
+  ctx1.lineTo(200,100);
+  ctx1.stroke();
+  
+  ctx1.fillRect((x*2)+85,(y*-2)+85, 30, 30);
+  
+  
+  ctx2.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx2.fillStyle = 'rgba(0, 0, 200, 0.5)';
+  ctx2.clearRect(0, 0, 20, 200); // clear canvas
+  
+  ctx2.beginPath();
+  ctx2.moveTo(0, 0);
+  ctx2.lineTo(20,0);
+  ctx2.lineTo(20,200);
+  ctx2.lineTo(0,200);
+  ctx2.lineTo(0,0);
+  ctx2.moveTo(0,100);
+  ctx2.lineTo(200,100);
+  ctx2.stroke();
+  
+  ctx2.fillRect(0,(z*-2)+90, 20, 20);
+  
+  
+  
+}
+
+
 function limit(x) {
   switch(true) {
   case (x < -50):
@@ -54,6 +105,7 @@ function key(axis,val) {
       sendCommand('log','toggle'); 
     break;
   }
+  draw(control.x,control.y,control.z);
 }
 
 socket.on('lightStatus', function(data) {
@@ -112,9 +164,11 @@ window.addEventListener("load", function(){
     x=x-50;
     sendCommand('t',x); 
   });
+  
   LightButton.addEventListener('click', function() {
     sendCommand('lights','toggle'); 
   });
+  
   LogButton.addEventListener('click', function() {
     sendCommand('log','toggle'); 
   });
@@ -122,22 +176,5 @@ window.addEventListener("load", function(){
   StartStreamButton.addEventListener('click', function() {
     start_stream();
   });
-  var joystickView = new JoystickView(150, function(callbackView){
-      $("#joystickContent").append(callbackView.render().el);
-      setTimeout(function(){
-          callbackView.renderSprite();
-      }, 0);
-  });
-  joystickView.bind("verticalMove", function(y){
-      $("#yVal").html(y);
-      //Call Socket.io function to emit vertical move y
-      sendCommand("v",Math.round(y*50));
-  });
-  joystickView.bind("horizontalMove", function(x){
-      $("#xVal").html(x);
-      //Call Socket.io function to emit horizontal move x
-      sendCommand("r",Math.round(x*50));
-  });
-  
-  
+  draw(control.x,control.y,control.z)
 });

@@ -7,7 +7,6 @@
 #control_data {
   display:none;
 }
-
 .stream-container {
   height: 0;
   padding-bottom: 42.86%; /* 16:9 */
@@ -17,7 +16,7 @@
 .controller {
   background: rgba(0,0,0,0.15);
   width:30%;
-  height:150px;
+  height:220px;
   float:left;
   text-align: center
 }
@@ -25,7 +24,7 @@
   font-family: Sans-Serif;
   background: rgba(0,0,0,0.15);
   width:40%;
-  height:150px;
+  height:220px;
   float:left;
   text-align: center;
 }

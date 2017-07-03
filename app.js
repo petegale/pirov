@@ -104,7 +104,7 @@ app.get('/', function (req, res) {
   var data = {};
   data = config;
   data.foo="bar";
-  res.render('dashboard',data);
+  res.render('keyboard_control_dash',data);
   //global.host=req.get('host');
   //global.host = global.host.substr(0,global.host.indexOf(":"));
   console.log("dashboard loaded")

@@ -104,10 +104,15 @@ app.get('/', function (req, res) {
   var data = {};
   data = config;
   data.foo="bar";
-  res.render('keyboard_control_dash',data);
+  if (config.keyboard_control) {
+    res.render('keyboard_control_dash',data);
+  } else {
+    res.render('dashboard',data);
+  }
+  
   //global.host=req.get('host');
   //global.host = global.host.substr(0,global.host.indexOf(":"));
-  console.log("dashboard loaded")
+  console.log("dashboard loaded, keyboard control: "+ config.keyboard_control)
 })
 
 //SOCKET.IO CONNECTIONS

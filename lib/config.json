@@ -5,8 +5,8 @@
   "img_rotation":"90",
   "stream_file" : "./public/stream/image_stream.jpg",
   "stream_fps" : 8,
-  "svUp":19,
+  "svUp":21,
   "svL":24,
   "svR":23,
-  "svLED":21
+  "svLED":19
 }
